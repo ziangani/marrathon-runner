@@ -1,0 +1,189 @@
+{
+    "name": "package",
+    "label": "Which package are you paying for?",
+    "type": "select",
+    "length": 50,
+    "description": "Which package are you paying for?",
+    "example": "",
+    "required": true,
+    "options": {
+        "Student": 150,
+        "Individual": 320,
+        "Group of Five": 1500,
+        "Group of Seven": 2000,
+        "Group of Ten": 2800,
+        "Corporate individual": 3000
+    },
+    "order": 11,
+    "prefix": null
+},
+{
+    "age": {
+        "name": "age",
+        "label": "Age",
+        "type": "select",
+        "length": 50,
+        "description": "Age",
+        "example": "",
+        "required": true,
+        "options": [
+            "below 20 years",
+            "21 to 30 years",
+            "31 to 40 years",
+            "41 to 50 years",
+            "51 years and above"
+        ],
+        "order": 1,
+        "prefix": null
+    },
+    "gender": {
+        "name": "gender",
+        "label": "Gender",
+        "type": "select",
+        "length": 50,
+        "description": "Gender",
+        "example": "",
+        "required": true,
+        "options": [
+            "Male",
+            "Female"
+        ],
+        "order": 2,
+        "prefix": null
+    },
+    "emergency_contact_name": {
+        "name": "emergency_contact_name",
+        "label": "Emergency Contact Name",
+        "type": "text",
+        "length": 50,
+        "description": "Emergency Contact Name",
+        "placeholder": "Emergency Contact Name",
+        "example": "John Doe",
+        "required": true,
+        "order": 3,
+        "prefix": null,
+        "autofocus": false,
+        "readonly": false,
+        "disabled": false
+    },
+    "emergency_contact_phone": {
+        "name": "emergency_contact_phone",
+        "label": "Emergency Contact Phone",
+        "type": "number",
+        "length": 10,
+        "description": "Emergency Contact Phone",
+        "placeholder": "Emergency Contact Phone",
+        "example": "0955123456",
+        "required": true,
+        "order": 4,
+        "prefix": null,
+        "autofocus": false,
+        "readonly": false,
+        "disabled": false,
+        "min": 1,
+        "max": 1000000000000,
+        "step": 1
+    },
+    "t_shirt_size": {
+        "name": "t_shirt_size",
+        "label": "T-Shirt Size",
+        "type": "select",
+        "length": 50,
+        "description": "T-Shirt Size",
+        "example": "",
+        "required": true,
+        "options": [
+            "XS",
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL",
+            "XXXL"
+        ],
+        "order": 5,
+        "prefix": null
+    },
+    "race_category": {
+        "name": "race_category",
+        "label": "Race Category",
+        "type": "select",
+        "length": 50,
+        "description": "Race Category",
+        "example": "",
+        "required": true,
+        "options": [
+            "21 KM Run",
+            "10 KM Run",
+            "5 KM Run",
+            "5 KM Walk"
+        ],
+        "order": 6,
+        "prefix": null
+    },
+    "health_condition": {
+        "name": "health_condition",
+        "label": "Any health condition?",
+        "type": "select",
+        "length": 50,
+        "description": "Any health condition?",
+        "example": "",
+        "required": true,
+        "options": [
+            "Yes",
+            "No"
+        ],
+        "order": 7,
+        "prefix": null
+    },
+    "health_condition_specify": {
+        "name": "health_condition_specify",
+        "label": "Kindly specify the health condition if any",
+        "type": "text",
+        "length": 50,
+        "description": "If your answer is (Yes), kindly specify the condition",
+        "placeholder": "If your answer is (Yes), kindly specify the condition",
+        "example": "Asthma",
+        "required": false,
+        "order": 8,
+        "prefix": null,
+        "autofocus": false,
+        "readonly": false,
+        "disabled": false
+    },
+    "how_did_you_hear_about_us": {
+        "name": "how_did_you_hear_about_us",
+        "label": "How did you hear about us?",
+        "type": "select",
+        "length": 50,
+        "description": "How did you hear about us?",
+        "example": "",
+        "required": true,
+        "options": [
+            "Facebook",
+            "Whatsapp",
+            "Email",
+            "LinkedIn",
+            "Website",
+            "A friend/workmate/ family member"
+        ],
+        "order": 9,
+        "prefix": null
+    },
+    "exhibiting": {
+        "name": "exhibiting",
+        "label": "Are you exhibiting?",
+        "type": "select",
+        "length": 50,
+        "description": "Are you exhibiting?",
+        "example": "",
+        "required": true,
+        "options": [
+            "Yes",
+            "No",
+            "Maybe"
+        ],
+        "order": 12,
+        "prefix": null
+    }
+}
