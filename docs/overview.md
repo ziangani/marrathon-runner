@@ -213,3 +213,17 @@ This implementation approach delivers a beautifully designed registration system
 The admin panel powered by Filament will give organizers easy access to manage registrations, track payments, and coordinate event logistics.
 
 Remember to deploy the system with proper security measures and monitor the payment integration carefully to ensure a smooth registration process for all participants.
+## 12. Communication Services
+
+We'll need to implement or integrate services for:
+- **Email**: Laravel's built-in mail system with a provider like Mailgun
+- **SMS**: Integration with a local SMS provider for Zambia
+- **WhatsApp**: Business API integration for automated messages
+
+## 13. Conclusion
+
+This implementation approach delivers a beautifully designed registration system for the LuWSI Run that meets all the specified requirements. The system follows Laravel and Tailwind CSS best practices while providing a seamless user experience from registration through payment confirmation.
+
+The admin panel powered by Filament will give organizers easy access to manage registrations, track payments, and coordinate event logistics.
+
+Remember to deploy the system with proper security measures and monitor the payment integration carefully to ensure a smooth registration process for all participants.
