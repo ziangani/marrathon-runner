@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     <!-- Meta Tags -->
     <title>{{ config('marathon.meta.title', config('marathon.name').' - '.config('app.name')) }} - @yield('title', 'Marathon Registration')</title>
     <meta name="description" content="{{ config('marathon.meta.description') }}">
     <meta name="keywords" content="{{ config('marathon.meta.keywords') }}">
     <meta name="author" content="{{ config('marathon.meta.author') }}">
-    
+
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:title" content="{{ config('marathon.meta.title') }}">
     <meta property="og:description" content="{{ config('marathon.meta.description') }}">
     <meta property="og:image" content="{{ config('marathon.meta.image') }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta name="twitter:card" content="summary_large_image">
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -47,7 +47,8 @@
                     <div class="flex-shrink-0 flex items-center">
                         <!-- Logo -->
                         <a href="{{ route('home') }}" class="text-primary font-bold text-xl">
-                            {{ config('marathon.name') }}
+                            <img src="{{ asset('img/logo.png') }}" alt="{{ config('marathon.name') }} Logo" class="h-8 w-auto">
+
                         </a>
                     </div>
                 </div>
@@ -78,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Mobile menu, show/hide based on menu state -->
             <div class="mobile-menu hidden md:hidden">
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -102,14 +103,14 @@
                         <h3 class="text-xl font-bold">{{ config('marathon.name') }}</h3>
                         <p class="text-gray-300 mt-2">{{ config('marathon.tagline') }}</p>
                     </div>
-                    
+
                     <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-6 md:mb-0">
                         <a href="{{ route('home') }}" class="text-gray-300 hover:text-white transition-colors">Home</a>
                         <a href="{{ route('register') }}" class="text-gray-300 hover:text-white transition-colors">Register</a>
                         <a href="#about" class="text-gray-300 hover:text-white transition-colors">About</a>
                         <a href="#contact" class="text-gray-300 hover:text-white transition-colors">Contact</a>
                     </div>
-                    
+
                     <div class="flex space-x-4">
                         @if(config('marathon.social.facebook'))
                         <a href="{{ config('marathon.social.facebook') }}" target="_blank" class="text-gray-300 hover:text-white transition-colors">
@@ -137,19 +138,19 @@
                         @endif
                     </div>
                 </div>
-                
+
                 <div class="mt-6 pt-6 border-t border-gray-700 text-center text-gray-400">
                     <p>&copy; {{ date('Y') }} {{ config('marathon.name') }}. All rights reserved.</p>
                 </div>
             </div>
         </footer>
-    
+
     <!-- Mobile menu toggle script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenuButton = document.querySelector('.mobile-menu-button');
             const mobileMenu = document.querySelector('.mobile-menu');
-            
+
             if (mobileMenuButton && mobileMenu) {
                 mobileMenuButton.addEventListener('click', function() {
                     mobileMenu.classList.toggle('hidden');
