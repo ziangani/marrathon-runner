@@ -69,32 +69,34 @@
 </head>
 <body class="font-sans antialiased bg-background text-gray-900">
     <header class="bg-white shadow">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <!-- Logo -->
-                        <a href="{{ route('home') }}" class="text-primary font-bold text-xl">
-                            <img src="{{ asset('img/logo.png') }}" alt="{{ config('marathon.name') }} Logo" class="h-8 w-auto">
-
-                        </a>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-20">
+                    <div class="flex">
+                        <div class="flex-shrink-0 flex items-center">
+                            <!-- Logo -->
+                            <a href="{{ route('home') }}" class="text-primary font-bold text-xl group">
+                                <img src="{{ asset('img/logo.png') }}" alt="{{ config('marathon.name') }} Logo" class="h-10 w-auto transition-transform duration-300 group-hover:scale-105">
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="flex items-center">
-                    <nav class="hidden md:flex space-x-10">
-                        <a href="{{ route('home') }}" class="text-base font-medium text-gray-500 hover:text-secondary">
-                            Home
-                        </a>
-                        <a href="{{ route('register') }}" class="text-base font-medium text-gray-500 hover:text-secondary">
-                            Register
-                        </a>
-                        <a href="#about" class="text-base font-medium text-gray-500 hover:text-secondary">
-                            About
-                        </a>
-                        <a href="#contact" class="text-base font-medium text-gray-500 hover:text-secondary">
-                            Contact
-                        </a>
-                    </nav>
+                    <div class="flex items-center">
+                        <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                            @php
+                                $currentRoute = Route::currentRouteName();
+                            @endphp
+                            <a href="{{ route('home') }}" class="nav-link {{ $currentRoute == 'home' ? 'active' : '' }}">
+                                <span>Home</span>
+                            </a>
+                            <a href="{{ route('register') }}" class="nav-link {{ $currentRoute == 'register' ? 'active' : '' }}">
+                                <span>Register</span>
+                            </a>
+                            <a href="{{ route('home') }}#about" class="nav-link {{ request()->is('*#about') ? 'active' : '' }}">
+                                <span>About</span>
+                            </a>
+                            <a href="{{ route('home') }}#contact" class="nav-link {{ request()->is('*#contact') ? 'active' : '' }}">
+                                <span>Contact</span>
+                            </a>
+                        </nav>
                     <!-- Mobile menu button -->
                     <div class="md:hidden flex items-center">
                         <button type="button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary">
@@ -113,8 +115,8 @@
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                     <a href="{{ route('home') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Home</a>
                     <a href="{{ route('register') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Register</a>
-                    <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">About</a>
-                    <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Contact</a>
+                    <a href="{{ route('home') }}#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">About</a>
+                    <a href="{{ route('home') }}#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Contact</a>
                 </div>
             </div>
         </div>
@@ -173,17 +175,84 @@
             </div>
         </footer>
 
-    <!-- Mobile menu toggle script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.querySelector('.mobile-menu-button');
-            const mobileMenu = document.querySelector('.mobile-menu');
-
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', function() {
-                    mobileMenu.classList.toggle('hidden');
-                });
+    <!-- Navigation styles -->
+        <style>
+            .nav-link {
+                position: relative;
+                display: inline-flex;
+                align-items: center;
+                padding: 0.75rem 1rem;
+                font-size: 1rem;
+                font-weight: 500;
+                color: #4B5563; /* text-gray-600 */
+                border-radius: 0.375rem;
+                transition: all 0.3s ease;
+                margin: 0 0.25rem;
             }
+            
+            .nav-link:hover {
+                color: #33A9E0; /* primary */
+                background-color: rgba(51, 169, 224, 0.05);
+            }
+            
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 3px;
+                background-color: #33A9E0; /* primary */
+                transition: all 0.3s ease;
+                transform: translateX(-50%);
+                opacity: 0;
+            }
+            
+            .nav-link:hover::after {
+                width: 30%;
+                opacity: 0.7;
+            }
+            
+            .nav-link.active {
+                color: #33A9E0; /* primary */
+                font-weight: 600;
+            }
+            
+            .nav-link.active::after {
+                width: 60%;
+                opacity: 1;
+            }
+        </style>
+    
+        <!-- Mobile menu toggle script -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const mobileMenuButton = document.querySelector('.mobile-menu-button');
+                const mobileMenu = document.querySelector('.mobile-menu');
+    
+                if (mobileMenuButton && mobileMenu) {
+                    mobileMenuButton.addEventListener('click', function() {
+                        mobileMenu.classList.toggle('hidden');
+                    });
+                }
+                
+                // Add active class to nav links based on URL hash
+                function setActiveNavLink() {
+                    const hash = window.location.hash;
+                    if (hash) {
+                        const navLinks = document.querySelectorAll('.nav-link');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').includes(hash)) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                }
+                
+                // Set active nav link on page load and hash change
+                setActiveNavLink();
+                window.addEventListener('hashchange', setActiveNavLink);
             
             // Countdown Timer
             function updateCountdown() {

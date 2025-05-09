@@ -64,15 +64,14 @@ class ConfirmationController extends Controller
                 'registration' => $registration,
                 'event_name' => config('marathon.name'),
                 'event_date' => config('marathon.date'),
-                'event_time' => config('marathon.time'),
                 'event_location' => config('marathon.location'),
             ]);
 
             // Set PDF options
             $pdf->setPaper('a4', 'portrait');
-
+            
             // Return the PDF for download
-            return $pdf->download("registration-{$registration->reference}.pdf");
+            return $pdf->download("racecard-{$registration->reference}.pdf");
         } catch (\Exception $e) {
             // Log the error
             Log::error('PDF generation failed', [

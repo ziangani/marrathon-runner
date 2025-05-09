@@ -4,108 +4,302 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Registration Confirmation</title>
     <style>
+        /* Base Styles */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
             color: #333;
             margin: 0;
             padding: 0;
+            background-color: #fff;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 30px;
+            position: relative;
         }
+        
+        /* Header Styles */
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #33A9E0;
-            padding-bottom: 20px;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #33A9E0;
+            padding-bottom: 25px;
+            position: relative;
+        }
+        .header:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #3D3F94;
         }
         .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #33A9E0;
-            margin-bottom: 10px;
-        }
-        .title {
             font-size: 28px;
             font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .subtitle {
-            font-size: 18px;
-            color: #666;
-        }
-        .race-number {
-            text-align: center;
-            margin: 30px 0;
-        }
-        .race-number-box {
-            display: inline-block;
-            padding: 15px 40px;
-            border: 3px solid #33A9E0;
-            font-size: 48px;
-            font-weight: bold;
             color: #33A9E0;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
-        .section {
-            margin-bottom: 30px;
-        }
-        .section-title {
-            font-size: 18px;
+        .title {
+            font-size: 32px;
             font-weight: bold;
             margin-bottom: 10px;
             color: #3D3F94;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
         }
+        .subtitle {
+            font-size: 18px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        /* Race Number Styles */
+        .race-number {
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+        }
+        .race-number p {
+            font-size: 18px;
+            font-weight: 600;
+            color: #3D3F94;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        .race-number-box {
+            display: inline-block;
+            padding: 20px 50px;
+            border: 4px solid #33A9E0;
+            font-size: 56px;
+            font-weight: bold;
+            color: #33A9E0;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .race-number-box:before, .race-number-box:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #3D3F94;
+            border-radius: 50%;
+        }
+        .race-number-box:before {
+            top: -10px;
+            left: -10px;
+        }
+        .race-number-box:after {
+            bottom: -10px;
+            right: -10px;
+        }
+        
+        /* Section Styles */
+        .section {
+            margin-bottom: 35px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #3D3F94;
+            border-bottom: 2px solid #33A9E0;
+            padding-bottom: 8px;
+            position: relative;
+        }
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: #3D3F94;
+        }
+        
+        /* Info Grid Styles */
         .info-grid {
             display: table;
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0 5px;
         }
         .info-row {
             display: table-row;
         }
+        .info-row:hover {
+            background-color: rgba(51, 169, 224, 0.05);
+        }
         .info-cell {
             display: table-cell;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
         }
         .info-label {
             font-weight: bold;
             width: 40%;
+            color: #555;
+            position: relative;
+            padding-left: 25px;
+        }
+        .info-label:before {
+            content: '•';
+            position: absolute;
+            left: 10px;
+            color: #33A9E0;
+            font-size: 18px;
         }
         .info-value {
             width: 60%;
+            font-weight: 500;
         }
-        .footer {
-            margin-top: 50px;
+        
+        /* Important Note Styles */
+        .important-note {
+            background-color: #f8f9fa;
+            border-left: 5px solid #33A9E0;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .important-note:before {
+            content: '!';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 30px;
+            height: 30px;
+            background-color: #3D3F94;
+            color: white;
+            border-radius: 50%;
             text-align: center;
-            font-size: 14px;
-            color: #666;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
+            line-height: 30px;
+            font-weight: bold;
+            font-size: 20px;
         }
+        .important-note strong {
+            display: block;
+            margin-bottom: 10px;
+            color: #3D3F94;
+            font-size: 18px;
+        }
+        .important-note ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .important-note li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+        
+        /* Barcode Styles */
         .barcode {
+            text-align: center;
+            margin: 40px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* QR Code Styles */
+        .qr-code {
             text-align: center;
             margin: 30px 0;
         }
-        .important-note {
-            background-color: #f8f9fa;
-            border-left: 4px solid #33A9E0;
-            padding: 15px;
-            margin: 20px 0;
-        }
-        .qr-code {
+        
+        /* Footer Styles */
+        .footer {
+            margin-top: 60px;
             text-align: center;
-            margin: 20px 0;
+            font-size: 14px;
+            color: #666;
+            border-top: 2px solid #e0e0e0;
+            padding-top: 25px;
+            position: relative;
+        }
+        .footer:before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background-color: #33A9E0;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        
+        /* Decorative Elements */
+        .corner-decoration {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 3px solid #33A9E0;
+            opacity: 0.5;
+        }
+        .top-left {
+            top: 20px;
+            left: 20px;
+            border-right: none;
+            border-bottom: none;
+        }
+        .top-right {
+            top: 20px;
+            right: 20px;
+            border-left: none;
+            border-bottom: none;
+        }
+        .bottom-left {
+            bottom: 20px;
+            left: 20px;
+            border-right: none;
+            border-top: none;
+        }
+        .bottom-right {
+            bottom: 20px;
+            right: 20px;
+            border-left: none;
+            border-top: none;
+        }
+        
+        /* Responsive Adjustments */
+        @media print {
+            body {
+                font-size: 12pt;
+            }
+            .container {
+                padding: 15px;
+            }
+            .race-number-box {
+                padding: 15px 40px;
+                font-size: 48px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Decorative corner elements -->
+        <div class="corner-decoration top-left"></div>
+        <div class="corner-decoration top-right"></div>
+        <div class="corner-decoration bottom-left"></div>
+        <div class="corner-decoration bottom-right"></div>
+        
         <div class="header">
             <div class="logo">{{ $event_name }}</div>
             <div class="title">Registration Confirmation</div>

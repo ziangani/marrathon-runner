@@ -45,56 +45,6 @@
 
                     <!-- Registration Details -->
                     <div class="mb-10">
-
-                        <!-- Session Messages -->
-                        @include('partials.session-messages')
-                        <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                            Registration Details
-                        </h3>
-
-                        <div class="bg-surface-raised rounded-lg p-0 shadow-sm">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="p-3 rounded-md bg-white shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
-                                    <p class="text-sm text-gray-500 mb-1">Name</p>
-                                    <p class="font-medium text-gray-900">{{ $registration->name }}</p>
-                                </div>
-                                <div class="p-3 rounded-md bg-white shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
-                                    <p class="text-sm text-gray-500 mb-1">Email</p>
-                                    <p class="font-medium text-gray-900">{{ $registration->email }}</p>
-                                </div>
-                                <div class="p-3 rounded-md bg-white shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
-                                    <p class="text-sm text-gray-500 mb-1">Phone</p>
-                                    <p class="font-medium text-gray-900">{{ $registration->phone }}</p>
-                                </div>
-                                <div class="p-3 rounded-md bg-white shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
-                                    <p class="text-sm text-gray-500 mb-1">Race Category</p>
-                                    <p class="font-medium text-gray-900">{{ $registration->race_category }}</p>
-                                </div>
-                                <div class="p-3 rounded-md bg-white shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
-                                    <p class="text-sm text-gray-500 mb-1">T-Shirt Size</p>
-                                    <p class="font-medium text-gray-900">{{ $registration->t_shirt_size }}</p>
-                                </div>
-                                <div class="p-3 rounded-md bg-white shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
-                                    <p class="text-sm text-gray-500 mb-1">Package</p>
-                                    <p class="font-medium text-gray-900">{{ config('marathon.packages.'.$registration->package.'.name') }}</p>
-                                </div>
-                                <div class="p-3 rounded-md bg-white shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
-                                    <p class="text-sm text-gray-500 mb-1">Reference Number</p>
-                                    <p class="font-medium text-gray-900">{{ $registration->reference }}</p>
-                                </div>
-                                <div class="p-3 rounded-md bg-white shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
-                                    <p class="text-sm text-gray-500 mb-1">Registration Date</p>
-                                    <p class="font-medium text-gray-900">{{ $registration->created_at->format('F j, Y') }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Event Information -->
-                    <div class="mb-10">
                         <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
                             <svg class="w-5 h-5 mr-2 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />

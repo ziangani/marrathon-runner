@@ -213,8 +213,8 @@ class PaymentController extends Controller
                 $registration->markAsPaid($transaction->id, 'techpay', $paymentId);
 
                 // Redirect to the confirmation page
-                return redirect()->route('confirmation.show', $registration->reference)
-                    ->with('success', 'Payment successful! Your registration is now complete.');
+                return redirect()->route('confirmation.show', $registration->reference);
+//                    ->with('success', 'Payment successful! Your registration is now complete.');
             } else if ($paymentStatus->data->status == 101) {
                 // Payment pending (status code 101)
                 $transaction->update([
