@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class Runner extends Model
@@ -155,6 +156,102 @@ class Runner extends Model
     public function hasPaid(): bool
     {
         return $this->status === 'PAID';
+    }
+
+    /**
+     * Send notifications to the runner after payment.
+     *
+     * @return bool
+     */
+    public function sendPaymentNotifications(): bool
+    {
+        $success = true;
+
+        // Send email notification
+        if ($this->email && !$this->email_sent) {
+            try {
+                $downloadUrl = url('/registration/download/' . $this->reference);
+                
+                $data = [
+                    'name' => $this->name,
+                    'email' => $this->email,
+                    'phone' => $this->phone,
+                    'gender' => $this->gender,
+                    'age' => $this->age,
+                    't_shirt_size' => $this->t_shirt_size,
+                    'race_category' => $this->race_category,
+                    'package' => $this->package,
+                    'reference' => $this->reference,
+                    'race_number' => $this->race_number,
+                    'download_url' => $downloadUrl
+                ];
+                
+                $email = new Emails();
+                $email->subject = 'Marathon Registration Confirmation';
+                $email->from = config('mail.from.address');
+                $email->email = $this->email;
+                $email->message = view('emails.runner-registration', $data)->render();
+                $email->view = 'emails.runner-registration';
+                $email->data = json_encode($data);
+                $email->status = 'PENDING';
+                $email->save();
+                
+                $this->markEmailSent();
+            } catch (\Exception $e) {
+                Log::error('Error sending email notification: ' . $e->getMessage());
+                $success = false;
+            }
+        }
+
+        // Send SMS notification
+        if ($this->phone && !$this->sms_sent) {
+            try {
+                $smsText = "Dear {$this->name},\n"
+                    . "Your marathon registration is confirmed!\n"
+                    . "Race Number: {$this->race_number}\n"
+                    . "Category: {$this->race_category}\n"
+                    . "Reference: {$this->reference}\n"
+                    . "Thank you for participating.";
+                
+                $sms = new SmsNotifications();
+                $sms->message = $smsText;
+                $sms->mobile = $this->phone;
+                $sms->status = 'PENDING';
+                $sms->sender = config('marathon.sms.sender_id', 'MARATHON');
+                $sms->save();
+                
+                $this->markSmsSent();
+            } catch (\Exception $e) {
+                Log::error('Error sending SMS notification: ' . $e->getMessage());
+                $success = false;
+            }
+        }
+
+        // Send WhatsApp notification
+        if ($this->phone && !$this->whatsapp_sent) {
+            try {
+                $waMessage = new WhatsAppNotifications();
+                $waMessage->mobile = $this->phone;
+                $waMessage->message = "Dear {$this->name},\n\n"
+                    . "Your marathon registration is confirmed!\n\n"
+                    . "Race Number: *{$this->race_number}*\n"
+                    . "Category: {$this->race_category}\n"
+                    . "Reference: {$this->reference}\n\n"
+                    . "Please arrive at least 1 hour before your race start time and bring your race number.\n\n"
+                    . "Thank you for participating!";
+                $waMessage->status = 'PENDING';
+                $waMessage->sender = config('marathon.whatsapp.sender_id', 'MARATHON');
+                $waMessage->type = WhatsAppNotifications::MESSAGE_TYPE_TEXT;
+                $waMessage->save();
+                
+                $this->markWhatsappSent();
+            } catch (\Exception $e) {
+                Log::error('Error sending WhatsApp notification: ' . $e->getMessage());
+                $success = false;
+            }
+        }
+
+        return $success;
     }
 
     /**

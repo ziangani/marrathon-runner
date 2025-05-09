@@ -5,9 +5,19 @@
 @section('content')
     <!-- Hero Section -->
     <section class="relative overflow-hidden">
-        <!-- Water-themed background with wave pattern -->
-        <div class="absolute inset-0 bg-gradient-to-br from-primary to-secondary">
-            <div class="absolute inset-0 opacity-10">
+        <!-- Runner background with overlay -->
+        <div class="absolute inset-0">
+            <!-- Background image of runners -->
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('img/runners-background.jpg') }}');">
+                <!-- Fallback gradient if image fails to load -->
+                <div class="absolute inset-0 bg-gradient-to-br from-primary to-secondary opacity-80"></div>
+            </div>
+            
+            <!-- Gradient overlay for text readability -->
+            <div class="absolute inset-0 bg-gradient-to-br from-primary to-secondary opacity-60"></div>
+            
+            <!-- Wave pattern overlay -->
+            <div class="absolute inset-0 opacity-20">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="absolute bottom-0 w-full">
                     <path fill="rgba(255,255,255,0.3)" d="M0,192L48,176C96,160,192,128,288,133.3C384,139,480,181,576,186.7C672,192,768,160,864,154.7C960,149,1056,171,1152,165.3C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
                 </svg>

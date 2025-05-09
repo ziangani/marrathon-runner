@@ -28,16 +28,13 @@ class init extends Command
     public function handle()
     {
         $this->info('Initializing payment providers...');
-        if ($provider = PaymentProviders::where('merchant_code', 'TECHPAY_NEW')->exists()) {
-            $provider = PaymentProviders::where('merchant_code', 'TECHPAY_NEW')->first();
-            Transactions::where('payment_provider_id', $provider->id)->delete();
-            PaymentProviders::where('merchant_code', 'TECHPAY_NEW')->delete();
+        if (!PaymentProviders::where('merchant_code', 'TECHPAY_LWSI')->exists()) {
             $paymentProvider = new PaymentProviders();
-            $paymentProvider->name = 'TechPay - NEW';
-            $paymentProvider->merchant_code = 'TECHPAY_NEW';
-            $paymentProvider->api_url = 'http://localhost:8001/techpay/public';
-            $paymentProvider->api_secret = 'pk_live_8GMA6YDuOutS9zYDyMV6FWWI';
-            $paymentProvider->api_key = 'YzyvRvVc85D8fr8YzChPWzlUD2wzISiL';
+            $paymentProvider->name = 'TechPay - LWSI';
+            $paymentProvider->merchant_code = 'TECHPAY_LWSI';
+            $paymentProvider->api_url = 'https://new.techpay.co.zm/techpay/public';
+            $paymentProvider->api_secret = 'pk_live_uK4cZIH5ApCXF8RMDSkWCOlf';
+            $paymentProvider->api_key = 'b0YFVdPDJktlWmq6JRbLGA2D8lrdxsfm';
             $paymentProvider->save();
 
 //            $paymentProvider = new PaymentProviders();

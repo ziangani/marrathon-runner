@@ -10,7 +10,7 @@ class PaymentProviders extends Model
 
     public static function getDefault() : self
     {
-        return self::where('merchant_code', 'TECHPAY_NEW')
+        return self::where('merchant_code', 'TECHPAY_LWSI')
             ->first();
     }
 }
