@@ -69,9 +69,9 @@ class ConfirmationController extends Controller
 
             // Set PDF options
             $pdf->setPaper('a4', 'portrait');
-            
+
             // Return the PDF for download
-            return $pdf->download("racecard-{$registration->reference}.pdf");
+            return $pdf->stream("racecard-{$registration->reference}.pdf");
         } catch (\Exception $e) {
             // Log the error
             Log::error('PDF generation failed', [
