@@ -5,6 +5,7 @@ namespace App\Integrations\TechPay;
 use App\Common\Helpers;
 use App\Models\PaymentProviders;
 use \Exception;
+use Illuminate\Support\Facades\Log;
 
 class HostedCheckOut
 {
@@ -72,6 +73,7 @@ class HostedCheckOut
         }
         Helpers::logApiRequest($params, $response, $request_time, date('Y-m-d H:i:s'), '', [], [], $reference, $reference, 'SUCCESS', 'TECHPAY_GET_TOKEN');
         if (!isset($response->responsecode)) {
+            Log::info('Techpay Response' .  $result);
             throw new Exception("The external system is temporarily unavailable - 500");
         }
         if ($response->responsecode != 100) {

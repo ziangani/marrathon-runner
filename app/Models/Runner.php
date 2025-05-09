@@ -106,7 +106,7 @@ class Runner extends Model
         
         // Find the highest race number for this year
         $highestNumber = self::where('race_number', 'like', "{$year}-%")
-            ->orderByRaw('CAST(SUBSTRING_INDEX(race_number, "-", -1) AS UNSIGNED) DESC')
+            ->orderByRaw('CAST(SPLIT_PART(race_number, \'-\', 2) AS INTEGER) DESC')
             ->value('race_number');
         
         if ($highestNumber) {

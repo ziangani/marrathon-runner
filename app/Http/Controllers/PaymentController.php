@@ -127,7 +127,7 @@ class PaymentController extends Controller
 
             // Update the transaction with the token
             $transaction->update([
-                'provider_external_reference' => $token,
+                'provider_payment_reference' => $token,
             ]);
 
             // Redirect to the TechPay hosted checkout page
@@ -193,9 +193,9 @@ class PaymentController extends Controller
             // Verify the payment status with TechPay
             $paymentStatus = $this->techpay->getTransactionStatus($paymentId);
 
-            // Store the payment ID in provider_payment_reference for polling
+            // Store the payment ID in provider_external_reference for polling
             $transaction->update([
-                'provider_payment_reference' => $paymentId,
+                'provider_external_reference' => $paymentId,
             ]);
 
             // Check the payment status
@@ -245,9 +245,8 @@ class PaymentController extends Controller
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-
-            return redirect()->route('payment.show', $reference)
-                ->with('error', 'An error occurred while verifying your payment. Please contact support.');
+            return redirect()->route('payment.pending', $reference);
+//            return redirect()->route('payment.show', $reference)->with('error', 'An error occurred while verifying your payment. Please contact support.');
         }
     }
 
@@ -352,7 +351,7 @@ class PaymentController extends Controller
                     ]);
 
                     // Mark the registration as paid
-                    $registration->markAsPaid($transaction->id, 'techpay', $transaction->provider_payment_reference);
+                    $registration->markAsPaid($transaction->id, 'techpay', $transaction->provider_external_reference);
 
                     if (request()->ajax()) {
                         return response()->json([

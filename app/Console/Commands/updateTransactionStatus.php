@@ -29,7 +29,7 @@ class updateTransactionStatus extends Command
      */
     public function handle()
     {
-        $transactions = Transactions::where('status', 'PENDING')->where('provider_payment_reference', '!=', null)->orderBy('id', 'desc')->get();
+        $transactions = Transactions::whereIn('status', ['PENDING','COMPLETE'])->where('provider_payment_reference', '!=', null)->orderBy('id', 'desc')->get();
         $this->info("Pending transactions found: " . count($transactions));
         foreach ($transactions as $transaction) {
             try {
@@ -37,6 +37,7 @@ class updateTransactionStatus extends Command
                 $this->info("Transaction token: $transaction->provider_payment_reference");
                 $provider = $transaction->paymentProvider;
                 $client = new HostedCheckOut($provider);
+
                 $provider_response = $client->getTransactionStatus($transaction->provider_payment_reference);
                 print_r($provider_response->data);
                 if ($provider_response->data->status == 101) {
@@ -58,7 +59,7 @@ class updateTransactionStatus extends Command
                     $transaction->provider_payment_date = date('Y-m-d');
                     $transaction->save();
                     $this->info("Transaction {$transaction->reference} is now COMPLETE");
-                    
+
                     // Mark the registration as paid if not already
                     $runner = Runner::where('reference', $transaction->reference)->first();
                     if ($runner && !$runner->hasPaid()) {

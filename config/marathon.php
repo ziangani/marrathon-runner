@@ -79,6 +79,11 @@ return [
     |--------------------------------------------------------------------------
     */
     'packages' => [
+        'test' => [
+            'name' => 'Test',
+            'price' => 1,
+            'description' => 'For students with valid ID',
+        ],
         'student' => [
             'name' => 'Student',
             'price' => 150,
