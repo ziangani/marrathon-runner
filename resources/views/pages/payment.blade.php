@@ -16,11 +16,15 @@
                     </p>
                 </div>
 
+
+                @include('partials.session-messages')
                 <div class="p-6">
+
                     <!-- Registration Summary -->
                     <div class="mb-8">
+
                         <h3 class="text-lg font-medium text-gray-900 mb-4">Registration Summary</h3>
-                        
+
                         <div class="bg-gray-50 rounded-lg p-4">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
@@ -48,7 +52,7 @@
                                     <p class="font-medium">{{ config('marathon.packages.'.$registration->package.'.name') }}</p>
                                 </div>
                             </div>
-                            
+
                             <div class="mt-4 pt-4 border-t border-gray-200">
                                 <div class="flex justify-between items-center">
                                     <span class="font-bold text-lg">Total Amount:</span>
@@ -57,26 +61,26 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Payment Options -->
-                    <div class="mb-8">
-                        <h3 class="text-lg font-medium text-gray-900 mb-4">Payment Method</h3>
-                        
-                        <div class="space-y-4">
-                            <div class="border border-gray-200 rounded-lg p-4">
-                                <div class="flex items-center">
-                                    <input id="payment-techpay" name="payment-method" type="radio" checked class="h-4 w-4 text-primary focus:ring-primary border-gray-300">
-                                    <label for="payment-techpay" class="ml-3 block text-sm font-medium text-gray-700">
-                                        TechPay Secure Payment
-                                    </label>
-                                </div>
-                                <div class="mt-2 pl-7">
-                                    <p class="text-sm text-gray-500">Pay securely using TechPay's payment gateway. You can use credit/debit cards, mobile money, or bank transfer.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
+
+                   <!-- Payment Options -->
+                   <div class="mb-8">
+                       <h3 class="text-lg font-medium text-gray-900 mb-4">Payment Method</h3>
+
+                       <div class="space-y-4">
+                           <div class="border border-gray-200 rounded-lg p-4">
+                               <div class="flex items-center">
+                                   <input id="payment-techpay" name="payment-method" type="radio" checked class="h-4 w-4 text-primary focus:ring-primary border-gray-300">
+                                   <label for="payment-techpay" class="ml-3 block text-sm font-medium text-gray-700">
+                                       Pay with Mobile Money or Card
+                                   </label>
+                               </div>
+                               <div class="mt-2 pl-7">
+                                   <p class="text-sm text-gray-500">Use your mobile money account or credit/debit card to complete the payment securely.</p>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
                     <!-- Payment Button -->
                     <div>
                         <form id="payment-form" action="{{ route('payment.process', $registration->reference) }}" method="POST">
@@ -93,7 +97,7 @@
                             </button>
                         </form>
                     </div>
-                    
+
                     <!-- Security Notice -->
                     <div class="mt-6 text-center">
                         <p class="text-sm text-gray-500 flex items-center justify-center">
@@ -105,7 +109,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Back to Registration -->
             <div class="mt-4 text-center">
                 <a href="{{ route('register') }}" class="text-primary hover:text-primary-dark">
@@ -121,7 +125,7 @@
             const button = document.getElementById('payment-button');
             const buttonText = document.getElementById('button-text');
             const buttonLoading = document.getElementById('button-loading');
-            
+
             form.addEventListener('submit', function(e) {
                 // Disable the button and show loading state
                 button.disabled = true;

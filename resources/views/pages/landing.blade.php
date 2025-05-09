@@ -21,7 +21,7 @@
             <div class="text-center">
                 <div class="inline-block mb-6 p-2 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-full">
                     <span class="px-4 py-1 text-sm font-medium text-white bg-secondary rounded-full">
-                        {{ config('marathon.date') }}
+                        {{ date('F j, Y', strtotime(config('marathon.date'))) }}
                     </span>
                 </div>
                 
@@ -47,35 +47,51 @@
                         Learn More
                     </a>
                 </div>
-                <div class="mt-16 text-white">
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
-                        <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-6 shadow-lg transform transition-transform hover:scale-105">
-                            <div class="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-primary bg-opacity-30">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                            </div>
-                            <div class="text-2xl font-bold">{{ config('marathon.date') }}</div>
-                            <div class="text-white text-opacity-80">Event Date</div>
+                <!-- Countdown Timer -->
+                <div class="mt-12 text-white">
+                    <h2 class="text-xl font-semibold mb-4">Race Day Countdown</h2>
+                    <div class="grid grid-cols-4 gap-3 max-w-lg mx-auto">
+                        <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-4 shadow-lg">
+                            <div id="countdown-days" class="text-3xl font-bold">--</div>
+                            <div class="text-white text-opacity-80 text-sm">Days</div>
                         </div>
-                        <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-6 shadow-lg transform transition-transform hover:scale-105">
-                            <div class="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-primary bg-opacity-30">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-4 shadow-lg">
+                            <div id="countdown-hours" class="text-3xl font-bold">--</div>
+                            <div class="text-white text-opacity-80 text-sm">Hours</div>
+                        </div>
+                        <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-4 shadow-lg">
+                            <div id="countdown-minutes" class="text-3xl font-bold">--</div>
+                            <div class="text-white text-opacity-80 text-sm">Minutes</div>
+                        </div>
+                        <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-4 shadow-lg">
+                            <div id="countdown-seconds" class="text-3xl font-bold">--</div>
+                            <div class="text-white text-opacity-80 text-sm">Seconds</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-center space-x-8">
+                        <div class="flex items-center">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full bg-primary bg-opacity-30 mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
-                            <div class="text-2xl font-bold">{{ config('marathon.time') }}</div>
-                            <div class="text-white text-opacity-80">Start Time</div>
+                            <div class="text-left">
+                                <div class="text-sm text-white text-opacity-80">Start Time</div>
+                                <div class="text-lg font-semibold">{{ config('marathon.time') }}</div>
+                            </div>
                         </div>
-                        <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-6 shadow-lg transform transition-transform hover:scale-105">
-                            <div class="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-primary bg-opacity-30">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div class="flex items-center">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full bg-primary bg-opacity-30 mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                 </svg>
                             </div>
-                            <div class="text-2xl font-bold">{{ config('marathon.location') }}</div>
-                            <div class="text-white text-opacity-80">Location</div>
+                            <div class="text-left">
+                                <div class="text-sm text-white text-opacity-80">Location</div>
+                                <div class="text-lg font-semibold">{{ config('marathon.location') }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -84,7 +100,7 @@
     </section>
 
     <!-- Race Categories Section -->
-    <section class="py-24 bg-background">
+    <section class="py-16 bg-background">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
                 <span class="inline-block px-3 py-1 text-sm font-medium text-primary bg-primary bg-opacity-10 rounded-full">
@@ -100,7 +116,7 @@
                 </div>
             </div>
 
-            <div class="mt-16 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+            <div class="mt-12 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                 @foreach(config('marathon.categories') as $key => $category)
                 <div class="group relative bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all hover:-translate-y-2 hover:shadow-2xl">
                     <!-- Category color indicator -->
@@ -113,24 +129,24 @@
                         </svg>
                     </div>
                     
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-gray-900 group-hover:text-primary transition-colors">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">
                             {{ $category['name'] }}
                         </h3>
                         
-                        <p class="mt-4 text-base text-gray-500 leading-relaxed">
+                        <p class="mt-3 text-sm text-gray-500 leading-relaxed">
                             {{ $category['description'] }}
                         </p>
                         
-                        <div class="mt-8 flex items-center justify-between">
-                            <span class="flex items-center px-4 py-2 rounded-full text-sm font-medium bg-primary bg-opacity-10 text-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                        <div class="mt-6 flex items-center justify-between">
+                            <span class="flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary bg-opacity-10 text-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
                                 </svg>
                                 {{ $category['start_time'] }}
                             </span>
                             
-                            <a href="{{ route('register', ['category' => $key]) }}" class="text-primary hover:text-primary-dark font-medium flex items-center">
+                            <a href="{{ route('register', ['category' => $key]) }}" class="text-primary hover:text-primary-dark font-medium text-sm flex items-center">
                                 Register
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -145,7 +161,7 @@
     </section>
 
     <!-- Pricing Section -->
-    <section class="py-24 bg-white relative overflow-hidden">
+    <section class="py-16 bg-white relative overflow-hidden">
         <!-- Background decoration -->
         <div class="absolute right-0 top-0 -mt-16 -mr-16 w-64 h-64 rounded-full bg-primary opacity-5"></div>
         <div class="absolute left-0 bottom-0 -mb-16 -ml-16 w-80 h-80 rounded-full bg-secondary opacity-5"></div>
@@ -165,45 +181,45 @@
                 </div>
             </div>
 
-            <div class="mt-16 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <div class="mt-12 grid gap-6 grid-cols-1 md:grid-cols-3">
                 @foreach(config('marathon.packages') as $key => $package)
                 <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transform transition-all hover:-translate-y-2 hover:shadow-2xl">
                     <!-- Package header -->
-                    <div class="p-8 bg-gradient-to-br from-primary to-secondary text-white">
-                        <h3 class="text-2xl font-bold">{{ $package['name'] }}</h3>
-                        <div class="mt-4 flex items-baseline">
-                            <span class="text-5xl font-extrabold tracking-tight">K{{ $package['price'] }}</span>
+                    <div class="p-6 bg-gradient-to-br from-primary to-secondary text-white">
+                        <h3 class="text-xl font-bold">{{ $package['name'] }}</h3>
+                        <div class="mt-2 flex items-baseline">
+                            <span class="text-4xl font-extrabold tracking-tight">K{{ $package['price'] }}</span>
                         </div>
                     </div>
                     
                     <!-- Package content -->
-                    <div class="p-8">
-                        <p class="text-gray-600">{{ $package['description'] }}</p>
+                    <div class="p-6">
+                        <p class="text-gray-600 text-sm">{{ $package['description'] }}</p>
                         
-                        <!-- Features list (placeholder - customize based on actual package features) -->
-                        <ul class="mt-6 space-y-4">
+                        <!-- Features list -->
+                        <ul class="mt-4 space-y-2">
                             <li class="flex items-start">
-                                <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <svg class="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
-                                <span class="ml-3 text-gray-500">Race entry</span>
+                                <span class="ml-3 text-sm text-gray-500">Race entry</span>
                             </li>
                             <li class="flex items-start">
-                                <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <svg class="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
-                                <span class="ml-3 text-gray-500">Official T-shirt</span>
+                                <span class="ml-3 text-sm text-gray-500">Official T-shirt</span>
                             </li>
                             <li class="flex items-start">
-                                <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <svg class="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
-                                <span class="ml-3 text-gray-500">Finisher medal</span>
+                                <span class="ml-3 text-sm text-gray-500">Finisher medal</span>
                             </li>
                         </ul>
                         
-                        <div class="mt-8">
-                            <a href="{{ route('register', ['package' => $key]) }}" class="block w-full bg-primary border border-transparent rounded-full py-3 px-6 text-center font-medium text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors shadow-md">
+                        <div class="mt-6">
+                            <a href="{{ route('register', ['package' => $key]) }}" class="block w-full bg-primary border border-transparent rounded-full py-2 px-4 text-center font-medium text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors shadow-md">
                                 Register Now
                             </a>
                         </div>
@@ -215,7 +231,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-24 bg-background relative overflow-hidden">
+    <section id="about" class="py-16 bg-background relative overflow-hidden">
         <!-- Water-themed decorative elements -->
         <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-primary opacity-5 rounded-full -mr-16 -mt-16"></div>
         <div class="absolute bottom-0 left-0 w-1/4 h-1/4 bg-secondary opacity-5 rounded-full -ml-16 -mb-16"></div>
@@ -242,62 +258,50 @@
                 </div>
             </div>
 
-            <div class="mt-16">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div class="bg-white rounded-2xl shadow-xl p-8 transform transition-all hover:-translate-y-1 hover:shadow-2xl">
-                        <div class="flex items-center mb-6">
-                            <div class="flex items-center justify-center h-14 w-14 rounded-full bg-primary bg-opacity-10 text-primary">
-                                <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="mt-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-2xl shadow-xl p-6 transform transition-all hover:-translate-y-1 hover:shadow-2xl">
+                        <div class="flex items-center mb-4">
+                            <div class="flex items-center justify-center h-12 w-12 rounded-full bg-primary bg-opacity-10 text-primary">
+                                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                                 </svg>
                             </div>
-                            <h3 class="ml-4 text-xl font-bold text-gray-900">Our Mission</h3>
+                            <h3 class="ml-4 text-lg font-bold text-gray-900">Our Mission & Impact</h3>
                         </div>
-                        <p class="text-gray-600 leading-relaxed">
-                            The Lusaka Water Security Initiative (LuWSI) aims to improve water security in Lusaka through collaborative action, sustainable water management, and community engagement.
+                        <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                            The Lusaka Water Security Initiative (LuWSI) improves water security through collaborative action and sustainable management. Your participation directly contributes to projects that improve water access, quality, and management in communities across Zambia.
                         </p>
-                    </div>
-
-                    <div class="bg-white rounded-2xl shadow-xl p-8 transform transition-all hover:-translate-y-1 hover:shadow-2xl">
-                        <div class="flex items-center mb-6">
-                            <div class="flex items-center justify-center h-14 w-14 rounded-full bg-primary bg-opacity-10 text-primary">
-                                <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        <div class="mt-4">
+                            <button class="text-primary text-sm font-medium flex items-center" id="read-more-mission">
+                                Read more
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
-                            </div>
-                            <h3 class="ml-4 text-xl font-bold text-gray-900">Community Impact</h3>
+                            </button>
                         </div>
-                        <p class="text-gray-600 leading-relaxed">
-                            Your participation in the LuWSI Run directly contributes to projects that improve water access, quality, and management in communities across Zambia.
-                        </p>
                     </div>
 
-                    <div class="bg-white rounded-2xl shadow-xl p-8 transform transition-all hover:-translate-y-1 hover:shadow-2xl">
-                        <div class="flex items-center mb-6">
-                            <div class="flex items-center justify-center h-14 w-14 rounded-full bg-primary bg-opacity-10 text-primary">
-                                <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="bg-white rounded-2xl shadow-xl p-6 transform transition-all hover:-translate-y-1 hover:shadow-2xl">
+                        <div class="flex items-center mb-4">
+                            <div class="flex items-center justify-center h-12 w-12 rounded-full bg-primary bg-opacity-10 text-primary">
+                                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
-                            <h3 class="ml-4 text-xl font-bold text-gray-900">Sustainable Solutions</h3>
+                            <h3 class="ml-4 text-lg font-bold text-gray-900">Solutions & Partnerships</h3>
                         </div>
-                        <p class="text-gray-600 leading-relaxed">
-                            We focus on long-term, sustainable solutions to water challenges, including infrastructure development, conservation efforts, and education programs.
+                        <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                            We focus on long-term, sustainable solutions to water challenges, including infrastructure development, conservation efforts, and education programs. We work with local and international partners to leverage expertise, resources, and best practices in water security management.
                         </p>
-                    </div>
-
-                    <div class="bg-white rounded-2xl shadow-xl p-8 transform transition-all hover:-translate-y-1 hover:shadow-2xl">
-                        <div class="flex items-center mb-6">
-                            <div class="flex items-center justify-center h-14 w-14 rounded-full bg-primary bg-opacity-10 text-primary">
-                                <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                        <div class="mt-4">
+                            <button class="text-primary text-sm font-medium flex items-center" id="read-more-solutions">
+                                Read more
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
-                            </div>
-                            <h3 class="ml-4 text-xl font-bold text-gray-900">Global Collaboration</h3>
+                            </button>
                         </div>
-                        <p class="text-gray-600 leading-relaxed">
-                            We work with local and international partners to leverage expertise, resources, and best practices in water security management.
-                        </p>
                     </div>
                 </div>
             </div>

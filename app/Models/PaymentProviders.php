@@ -10,6 +10,7 @@ class PaymentProviders extends Model
 
     public static function getDefault() : self
     {
-        throw new \Exception('Operation not supported');
+        return self::where('merchant_code', 'TECHPAY_PROD')
+            ->first();
     }
 }

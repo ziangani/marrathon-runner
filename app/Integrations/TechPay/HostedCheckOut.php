@@ -11,6 +11,7 @@ class HostedCheckOut
     private $endpoint;
     private $apiKey;
     private $apiAuth;
+    private $provider;
 
     public function __construct(PaymentProviders $provider)
     {
@@ -18,6 +19,12 @@ class HostedCheckOut
         $this->endpoint = $provider->api_url;
         $this->apiKey = $provider->api_key;
         $this->apiAuth = $provider->api_secret;
+        $this->provider = $provider;
+    }
+
+    public function getPaymentProvider()
+    {
+        return $this->provider;
     }
 
     public function getToken($amount, $reference, $description, $returnURL = null)

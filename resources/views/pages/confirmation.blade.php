@@ -22,6 +22,9 @@
                 </div>
 
                 <div class="p-6">
+                    <!-- Session Messages -->
+                    @include('partials.session-messages')
+                    
                     <!-- Race Number -->
                     <div class="mb-8 text-center">
                         <h3 class="text-lg font-medium text-gray-900 mb-2">Your Race Number</h3>

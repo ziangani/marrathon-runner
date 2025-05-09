@@ -24,7 +24,7 @@ class RegistrationController extends Controller
      * Store a new registration.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -48,6 +48,13 @@ class RegistrationController extends Controller
         ]);
 
         if ($validator->fails()) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+            
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
@@ -95,7 +102,16 @@ class RegistrationController extends Controller
             // Commit the transaction
             DB::commit();
 
-            // Redirect to payment page
+            // Return appropriate response based on request type
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Registration successful!',
+                    'redirect' => route('payment.show', $runner->reference)
+                ]);
+            }
+            
+            // Redirect to payment page for non-AJAX requests
             return redirect()->route('payment.show', $runner->reference);
         } catch (\Exception $e) {
             // Rollback the transaction in case of an error
@@ -108,7 +124,15 @@ class RegistrationController extends Controller
                 'data' => $request->except(['terms']),
             ]);
 
-            // Redirect back with error
+            // Return appropriate error response based on request type
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Registration failed. Please try again.'
+                ], 500);
+            }
+            
+            // Redirect back with error for non-AJAX requests
             return redirect()->back()
                 ->with('error', 'Registration failed. Please try again.')
                 ->withInput();

@@ -11,29 +11,29 @@ return [
     */
 
     'name' => env('MARATHON_NAME', 'LuWSI Run'),
-    'tagline' => env('MARATHON_TAGLINE', 'Supporting water security initiatives in Zambia'),
-    'description' => env('MARATHON_DESCRIPTION', 'Join us for the annual marathon supporting water security initiatives in Zambia.'),
-    
+    'tagline' => env('MARATHON_TAGLINE', 'Run for Water, Walk for life: Securing Zambia\'s future'),
+    'description' => env('MARATHON_DESCRIPTION', 'Zambia is severely water insecure and extremely vulnerable to the impacts of climate change. Join us for the annual marathon to raise awareness and support initiatives addressing water security challenges in Zambia.'),
+
     /*
     |--------------------------------------------------------------------------
     | Event Details
     |--------------------------------------------------------------------------
     */
-    'date' => env('MARATHON_DATE', '2025-06-15'),
-    'time' => env('MARATHON_TIME', '06:00 AM'),
-    'location' => env('MARATHON_LOCATION', 'Lusaka, Zambia'),
-    
+    'date' => env('MARATHON_DATE', '2025-06-07'),
+    'time' => env('MARATHON_TIME', '05:00 AM - 10:00 AM'),
+    'location' => env('MARATHON_LOCATION', 'East Park Mall, Lusaka, Zambia'),
+
     /*
     |--------------------------------------------------------------------------
     | Contact Information
     |--------------------------------------------------------------------------
     */
     'contact' => [
-        'email' => env('MARATHON_EMAIL', 'info@luwsirun.org'),
-        'phone' => env('MARATHON_PHONE', '+260 97 1234567'),
+        'email' => env('MARATHON_EMAIL', 'luwsisecretariat@gmail.com'),
+        'phone' => env('MARATHON_PHONE', '+260 975 007122'),
         'address' => env('MARATHON_ADDRESS', 'Lusaka, Zambia'),
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Social Media
@@ -44,7 +44,7 @@ return [
         'twitter' => env('MARATHON_TWITTER', 'https://twitter.com/luwsirun'),
         'instagram' => env('MARATHON_INSTAGRAM', 'https://instagram.com/luwsirun'),
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Race Categories
@@ -72,7 +72,7 @@ return [
             'start_time' => '07:30 AM',
         ],
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Registration Packages
@@ -86,31 +86,41 @@ return [
         ],
         'individual' => [
             'name' => 'Individual',
-            'price' => 320,
+            'price' => 400,
             'description' => 'Standard individual entry',
         ],
         'group_five' => [
             'name' => 'Group of Five',
-            'price' => 1500,
+            'price' => 1700,
             'description' => 'Group entry for 5 participants',
         ],
         'group_seven' => [
             'name' => 'Group of Seven',
-            'price' => 2000,
+            'price' => 2500,
             'description' => 'Group entry for 7 participants',
         ],
         'group_ten' => [
             'name' => 'Group of Ten',
-            'price' => 2800,
+            'price' => 3500,
             'description' => 'Group entry for 10 participants',
         ],
-        'corporate' => [
-            'name' => 'Corporate individual',
-            'price' => 3000,
-            'description' => 'Corporate entry',
+        'executive' => [
+            'name' => 'Executive',
+            'price' => 1000,
+            'description' => 'Executive participant entry',
+        ],
+        'champion' => [
+            'name' => 'Water & Climate Champion',
+            'price' => 1200,
+            'description' => 'Support as a Water & Climate Champion',
+        ],
+        'sponsor' => [
+            'name' => 'Individual Sponsor',
+            'price' => 5000,
+            'description' => 'Individual sponsorship (K5,000 - K10,000)',
         ],
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Meta Data
@@ -121,6 +131,6 @@ return [
         'description' => env('MARATHON_META_DESCRIPTION', 'Register for the LuWSI Run marathon supporting water security initiatives in Zambia.'),
         'keywords' => env('MARATHON_META_KEYWORDS', 'marathon, run, LuWSI, water security, Zambia, charity run'),
         'author' => env('MARATHON_META_AUTHOR', 'LuWSI'),
-        'image' => env('MARATHON_META_IMAGE', '/images/luwsi-run-banner.jpg'),
+        'image' => env('MARATHON_META_IMAGE', '/img/logo.png'),
     ],
 ];

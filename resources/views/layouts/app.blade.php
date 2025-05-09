@@ -35,7 +35,35 @@
                         background: '#F5F8FF', // Light blue/off-white
                     }
                 }
-            }
+            },
+            plugins: [
+                function({ addUtilities }) {
+                    const newUtilities = {
+                        '.line-clamp-1': {
+                            overflow: 'hidden',
+                            display: '-webkit-box',
+                            '-webkit-box-orient': 'vertical',
+                            '-webkit-line-clamp': '1',
+                        },
+                        '.line-clamp-2': {
+                            overflow: 'hidden',
+                            display: '-webkit-box',
+                            '-webkit-box-orient': 'vertical',
+                            '-webkit-line-clamp': '2',
+                        },
+                        '.line-clamp-3': {
+                            overflow: 'hidden',
+                            display: '-webkit-box',
+                            '-webkit-box-orient': 'vertical',
+                            '-webkit-line-clamp': '3',
+                        },
+                        '.line-clamp-none': {
+                            '-webkit-line-clamp': 'unset',
+                        },
+                    }
+                    addUtilities(newUtilities, ['responsive', 'hover'])
+                }
+            ]
         }
     </script>
 </head>
@@ -154,6 +182,107 @@
             if (mobileMenuButton && mobileMenu) {
                 mobileMenuButton.addEventListener('click', function() {
                     mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Countdown Timer
+            function updateCountdown() {
+                const eventDate = new Date('{{ config('marathon.date') }}T{{ substr(config('marathon.time'), 0, 5) }}:00');
+                const now = new Date();
+                const diff = eventDate - now;
+                
+                if (diff <= 0) {
+                    // Event has passed
+                    const daysElement = document.getElementById('countdown-days');
+                    const hoursElement = document.getElementById('countdown-hours');
+                    const minutesElement = document.getElementById('countdown-minutes');
+                    const secondsElement = document.getElementById('countdown-seconds');
+                    
+                    if (daysElement) daysElement.textContent = '0';
+                    if (hoursElement) hoursElement.textContent = '0';
+                    if (minutesElement) minutesElement.textContent = '0';
+                    if (secondsElement) secondsElement.textContent = '0';
+                    return;
+                }
+                
+                // Calculate days, hours, minutes, seconds
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                // Update the DOM if elements exist
+                if (document.getElementById('countdown-days')) {
+                    document.getElementById('countdown-days').textContent = days;
+                    document.getElementById('countdown-hours').textContent = hours.toString().padStart(2, '0');
+                    document.getElementById('countdown-minutes').textContent = minutes.toString().padStart(2, '0');
+                    document.getElementById('countdown-seconds').textContent = seconds.toString().padStart(2, '0');
+                }
+            }
+            
+            // Initialize countdown
+            if (document.getElementById('countdown-days')) {
+                updateCountdown();
+                // Update every second
+                setInterval(updateCountdown, 1000);
+            }
+            
+            // Category tabs functionality
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            const categoryContents = document.querySelectorAll('.category-content');
+            
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    categoryTabs.forEach(t => {
+                        t.classList.remove('border-primary', 'text-primary');
+                        t.classList.add('border-transparent', 'text-gray-500');
+                    });
+                    
+                    // Add active class to clicked tab
+                    tab.classList.remove('border-transparent', 'text-gray-500');
+                    tab.classList.add('border-primary', 'text-primary');
+                    
+                    // Hide all content sections
+                    categoryContents.forEach(content => {
+                        content.classList.add('hidden');
+                    });
+                    
+                    // Show selected content
+                    const categoryId = tab.getAttribute('data-category');
+                    document.getElementById('category-' + categoryId)?.classList.remove('hidden');
+                });
+            });
+            
+            // Read more functionality for About section
+            const readMoreMission = document.getElementById('read-more-mission');
+            const readMoreSolutions = document.getElementById('read-more-solutions');
+            
+            if (readMoreMission) {
+                readMoreMission.addEventListener('click', function() {
+                    const content = this.previousElementSibling;
+                    
+                    if (content.classList.contains('line-clamp-3')) {
+                        content.classList.remove('line-clamp-3');
+                        this.innerHTML = 'Read less <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>';
+                    } else {
+                        content.classList.add('line-clamp-3');
+                        this.innerHTML = 'Read more <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>';
+                    }
+                });
+            }
+            
+            if (readMoreSolutions) {
+                readMoreSolutions.addEventListener('click', function() {
+                    const content = this.previousElementSibling;
+                    
+                    if (content.classList.contains('line-clamp-3')) {
+                        content.classList.remove('line-clamp-3');
+                        this.innerHTML = 'Read less <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>';
+                    } else {
+                        content.classList.add('line-clamp-3');
+                        this.innerHTML = 'Read more <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>';
+                    }
                 });
             }
         });

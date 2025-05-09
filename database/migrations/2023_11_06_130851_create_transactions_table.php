@@ -30,7 +30,6 @@ class CreateTransactionsTable extends Migration
             $table->string('payment_type')->nullable();
             $table->string('settlement_status')->default('PENDING');
             $table->foreign('payment_provider_id')->references('id')->on('payment_providers');
-            $table->foreign('payer_kyc_id')->references('id')->on('payer_kycs');
             $table->boolean("user_notified")->default(false);
             $table->timestamps();
         });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Integrations\TechPay\HostedCheckOut;
+use App\Models\PaymentProviders;
 use App\Models\Runner;
 use App\Models\Transactions;
 use Illuminate\Http\Request;
@@ -23,9 +24,9 @@ class PaymentController extends Controller
      * @param  \App\Integrations\TechPay\HostedCheckOut  $techpay
      * @return void
      */
-    public function __construct(HostedCheckOut $techpay)
+    public function __construct()
     {
-        $this->techpay = $techpay;
+        $this->techpay = new HostedCheckOut(PaymentProviders::getDefault());
     }
 
     /**
@@ -104,19 +105,16 @@ class PaymentController extends Controller
                 'cancel_url' => route('payment.show', $registration->reference),
             ];
 
+            $provider = $this->techpay->getPaymentProvider();
+
             // Create a transaction record
             $transaction = Transactions::create([
                 'reference' => $registration->reference,
                 'amount' => $registration->package_amount,
-                'currency' => 'ZMW',
                 'status' => 'PENDING',
-                'provider' => 'techpay',
-                'description' => config('marathon.name') . ' Registration - ' . $registration->package_name,
-                'metadata' => json_encode([
-                    'runner_id' => $registration->id,
-                    'package' => $registration->package,
-                    'package_name' => $registration->package_name,
-                ]),
+                'payment_provider_id' => $provider->id,
+                'merchant_code' => $provider->merchant_code,
+                'payer_kyc_id' => $registration->id,
             ]);
 
             // Get token from TechPay
@@ -129,11 +127,11 @@ class PaymentController extends Controller
 
             // Update the transaction with the token
             $transaction->update([
-                'provider_reference' => $token,
+                'provider_external_reference' => $token,
             ]);
 
             // Redirect to the TechPay hosted checkout page
-            $paymentUrl = $this->techpay->getEndpoint() . '/hc/pay/' . $token;
+            $paymentUrl = $this->techpay->getEndpoint() . '/checkout/' . $token;
             return redirect()->away($paymentUrl);
         } catch (\Exception $e) {
             // Log the error
@@ -157,8 +155,8 @@ class PaymentController extends Controller
     public function callback(Request $request)
     {
         // Get the payment reference from the request
-        $reference = $request->input('reference');
-        $paymentId = $request->input('payment_id');
+        $reference = $request->input('token');
+        $paymentId = $request->input('bb_invoice_id');
         $status = $request->input('status');
 
         // Log the callback data
@@ -201,9 +199,9 @@ class PaymentController extends Controller
                 // Update the transaction status
                 $transaction->update([
                     'status' => 'PAID',
-                    'provider_reference' => $paymentId,
-                    'provider_response' => json_encode($paymentStatus),
-                    'paid_at' => now(),
+                    'provider_external_reference' => $paymentId,
+                    'provider_status_description' => json_encode($paymentStatus),
+                    'provider_payment_confirmation_date' => now(),
                 ]);
 
                 // Mark the registration as paid
@@ -216,8 +214,8 @@ class PaymentController extends Controller
                 // Update the transaction status
                 $transaction->update([
                     'status' => 'FAILED',
-                    'provider_reference' => $paymentId,
-                    'provider_response' => json_encode($paymentStatus),
+                    'provider_external_reference' => $paymentId,
+                    'provider_status_description' => json_encode($paymentStatus),
                 ]);
 
                 // Redirect back to the payment page
