@@ -13,7 +13,7 @@ class SendRunnerNotifications extends Command
      *
      * @var string
      */
-    protected $signature = 'runners:send-notifications {--limit=50 : Maximum number of runners to process} {--debug : Enable verbose output}';
+    protected $signature = 'runners:send-notifications';
 
     /**
      * The console command description.
@@ -40,9 +40,9 @@ class SendRunnerNotifications extends Command
     public function handle()
     {
         try {
-            $limit = (int) $this->option('limit');
-            $debug = $this->option('debug');
-            
+            $limit = 50;
+            $debug = true;
+
             // Get all paid runners who haven't been fully notified
             $query = Runner::where('status', 'PAID')
                 ->where(function($query) {
@@ -52,9 +52,9 @@ class SendRunnerNotifications extends Command
                 })
                 ->orderBy('payment_date', 'asc')
                 ->limit($limit);
-            
+
             $runners = $query->get();
-            
+
             if ($debug) {
                 $this->info(count($runners) . ' runners found that need notifications (limit: ' . $limit . ')');
             } else {
@@ -66,10 +66,10 @@ class SendRunnerNotifications extends Command
 
             foreach ($runners as $runner) {
                 $this->info("Processing notifications for runner: {$runner->name} (ID: {$runner->id})");
-                
+
                 try {
                     $result = $runner->sendPaymentNotifications();
-                    
+
                     if ($result) {
                         if ($debug) {
                             $this->info("Successfully sent notifications to {$runner->name}");
