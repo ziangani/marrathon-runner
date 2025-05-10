@@ -218,7 +218,7 @@ class Runner extends Model
                 $sms->message = $smsText;
                 $sms->mobile = $this->phone;
                 $sms->status = 'PENDING';
-                $sms->sender = config('marathon.sms.sender_id', 'Techpay');
+                $sms->sender = config('marathon.sms.sender_id', 'TechPay');
                 $sms->save();
 
                 $this->markSmsSent();
