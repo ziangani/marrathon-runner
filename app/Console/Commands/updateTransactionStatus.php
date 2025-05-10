@@ -29,7 +29,7 @@ class updateTransactionStatus extends Command
      */
     public function handle()
     {
-        $transactions = Transactions::whereIn('status', ['PENDING','COMPLETE'])->where('provider_payment_reference', '!=', null)->orderBy('id', 'desc')->get();
+        $transactions = Transactions::whereIn('status', ['PENDING'])->where('provider_payment_reference', '!=', null)->orderBy('id', 'desc')->get();
         $this->info("Pending transactions found: " . count($transactions));
         foreach ($transactions as $transaction) {
             try {
