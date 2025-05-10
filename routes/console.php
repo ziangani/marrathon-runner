@@ -2,6 +2,7 @@
 
 use App\Console\Commands\sendEmail;
 use App\Console\Commands\SendRunnerNotifications;
+use App\Console\Commands\sendSMS;
 use App\Console\Commands\updateTransactionStatus;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
@@ -14,4 +15,5 @@ Schedule::command(updateTransactionStatus::class)->everyTenSeconds()->runInBackg
 // This will process notifications for runners who have paid but haven't been notified yet
 Schedule::command(SendRunnerNotifications::class)->everyMinute()->runInBackground()->withoutOverlapping();
 Schedule::command(SendEmail::class)->everyMinute()->runInBackground()->withoutOverlapping();
+Schedule::command(SendSMS::class)->everyMinute()->runInBackground()->withoutOverlapping();
 

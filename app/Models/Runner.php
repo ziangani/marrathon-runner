@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Common\Helpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -104,12 +105,12 @@ class Runner extends Model
     {
         // Get the current year
         $year = date('Y');
-        
+
         // Find the highest race number for this year
         $highestNumber = self::where('race_number', 'like', "{$year}-%")
             ->orderByRaw('CAST(SPLIT_PART(race_number, \'-\', 2) AS INTEGER) DESC')
             ->value('race_number');
-        
+
         if ($highestNumber) {
             // Extract the number part and increment it
             $parts = explode('-', $highestNumber);
@@ -119,7 +120,7 @@ class Runner extends Model
             // Start with 1 if no race numbers exist for this year
             $number = 1;
         }
-        
+
         // Format the race number with leading zeros (e.g., 2025-0001)
         return "{$year}-" . str_pad($number, 4, '0', STR_PAD_LEFT);
     }
@@ -139,12 +140,12 @@ class Runner extends Model
         $this->payment_provider = $provider;
         $this->payment_reference = $reference;
         $this->payment_date = now();
-        
+
         // Generate a race number if not already assigned
         if (!$this->race_number) {
             $this->race_number = self::generateUniqueRaceNumber();
         }
-        
+
         return $this->save();
     }
 
@@ -171,7 +172,7 @@ class Runner extends Model
         if ($this->email && !$this->email_sent) {
             try {
                 $downloadUrl = url('/registration/download/' . $this->reference);
-                
+
                 $data = [
                     'name' => $this->name,
                     'email' => $this->email,
@@ -185,7 +186,7 @@ class Runner extends Model
                     'race_number' => $this->race_number,
                     'download_url' => $downloadUrl
                 ];
-                
+
                 $email = new Emails();
                 $email->subject = 'Marathon Registration Confirmation';
                 $email->from = config('mail.from.address');
@@ -195,7 +196,7 @@ class Runner extends Model
                 $email->data = json_encode($data);
                 $email->status = 'PENDING';
                 $email->save();
-                
+
                 $this->markEmailSent();
             } catch (\Exception $e) {
                 Log::error('Error sending email notification: ' . $e->getMessage());
@@ -212,14 +213,14 @@ class Runner extends Model
                     . "Category: {$this->race_category}\n"
                     . "Reference: {$this->reference}\n"
                     . "Thank you for participating.";
-                
+
                 $sms = new SmsNotifications();
                 $sms->message = $smsText;
                 $sms->mobile = $this->phone;
                 $sms->status = 'PENDING';
-                $sms->sender = config('marathon.sms.sender_id', 'MARATHON');
+                $sms->sender = config('marathon.sms.sender_id', 'Techpay');
                 $sms->save();
-                
+
                 $this->markSmsSent();
             } catch (\Exception $e) {
                 Log::error('Error sending SMS notification: ' . $e->getMessage());
@@ -243,7 +244,7 @@ class Runner extends Model
                 $waMessage->sender = config('marathon.whatsapp.sender_id', 'MARATHON');
                 $waMessage->type = WhatsAppNotifications::MESSAGE_TYPE_TEXT;
                 $waMessage->save();
-                
+
                 $this->markWhatsappSent();
             } catch (\Exception $e) {
                 Log::error('Error sending WhatsApp notification: ' . $e->getMessage());
@@ -338,7 +339,7 @@ class Runner extends Model
         if ($this->race_category_key) {
             return config("marathon.categories.{$this->race_category_key}.description") ?? null;
         }
-        
+
         return null;
     }
 
@@ -352,7 +353,7 @@ class Runner extends Model
         if ($this->race_category_key) {
             return config("marathon.categories.{$this->race_category_key}.start_time") ?? null;
         }
-        
+
         return null;
     }
 }
