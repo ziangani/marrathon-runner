@@ -8,14 +8,14 @@
         <!-- Runner background with overlay -->
         <div class="absolute inset-0">
             <!-- Background image of runners -->
-            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('img/runners-background.jpg') }}');">
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('img/banner.webp') }}');">
                 <!-- Fallback gradient if image fails to load -->
                 <div class="absolute inset-0 bg-gradient-to-br from-primary to-secondary opacity-80"></div>
             </div>
-            
+
             <!-- Gradient overlay for text readability -->
             <div class="absolute inset-0 bg-gradient-to-br from-primary to-secondary opacity-60"></div>
-            
+
             <!-- Wave pattern overlay -->
             <div class="absolute inset-0 opacity-20">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="absolute bottom-0 w-full">
@@ -26,7 +26,7 @@
                 </svg>
             </div>
         </div>
-        
+
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-36">
             <div class="text-center">
                 <div class="inline-block mb-6 p-2 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-full">
@@ -34,15 +34,15 @@
                         {{ date('F j, Y', strtotime(config('marathon.date'))) }}
                     </span>
                 </div>
-                
+
                 <h1 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight">
                     {{ config('marathon.name') }}
                 </h1>
-                
+
                 <p class="mt-6 max-w-xl mx-auto text-xl text-white sm:text-2xl leading-relaxed">
                     {{ config('marathon.tagline') }}
                 </p>
-                
+
                 <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
                     <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full text-primary bg-white shadow-lg hover:bg-gray-50 transform transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -78,7 +78,7 @@
                             <div class="text-white text-opacity-80 text-sm">Seconds</div>
                         </div>
                     </div>
-                    
+
                     <div class="mt-6 flex justify-center space-x-8">
                         <div class="flex items-center">
                             <div class="flex items-center justify-center w-10 h-10 rounded-full bg-primary bg-opacity-30 mr-3">
@@ -131,23 +131,23 @@
                 <div class="group relative bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all hover:-translate-y-2 hover:shadow-2xl">
                     <!-- Category color indicator -->
                     <div class="absolute top-0 inset-x-0 h-1 bg-primary"></div>
-                    
+
                     <!-- Category icon (placeholder, you can customize based on category) -->
                     <div class="absolute top-4 right-4 w-10 h-10 rounded-full bg-primary bg-opacity-10 flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd" />
                         </svg>
                     </div>
-                    
+
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">
                             {{ $category['name'] }}
                         </h3>
-                        
+
                         <p class="mt-3 text-sm text-gray-500 leading-relaxed">
                             {{ $category['description'] }}
                         </p>
-                        
+
                         <div class="mt-6 flex items-center justify-between">
                             <span class="flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary bg-opacity-10 text-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -155,7 +155,7 @@
                                 </svg>
                                 {{ $category['start_time'] }}
                             </span>
-                            
+
                             <a href="{{ route('register', ['category' => $key]) }}" class="text-primary hover:text-primary-dark font-medium text-sm flex items-center">
                                 Register
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
@@ -175,7 +175,7 @@
         <!-- Background decoration -->
         <div class="absolute right-0 top-0 -mt-16 -mr-16 w-64 h-64 rounded-full bg-primary opacity-5"></div>
         <div class="absolute left-0 bottom-0 -mb-16 -ml-16 w-80 h-80 rounded-full bg-secondary opacity-5"></div>
-        
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div class="text-center">
                 <span class="inline-block px-3 py-1 text-sm font-medium text-secondary bg-secondary bg-opacity-10 rounded-full">
@@ -201,11 +201,11 @@
                             <span class="text-4xl font-extrabold tracking-tight">K{{ $package['price'] }}</span>
                         </div>
                     </div>
-                    
+
                     <!-- Package content -->
                     <div class="p-6">
                         <p class="text-gray-600 text-sm">{{ $package['description'] }}</p>
-                        
+
                         <!-- Features list -->
                         <ul class="mt-4 space-y-2">
                             <li class="flex items-start">
@@ -227,7 +227,7 @@
                                 <span class="ml-3 text-sm text-gray-500">Finisher medal</span>
                             </li>
                         </ul>
-                        
+
                         <div class="mt-6">
                             <a href="{{ route('register', ['package' => $key]) }}" class="block w-full bg-primary border border-transparent rounded-full py-2 px-4 text-center font-medium text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors shadow-md">
                                 Register Now
@@ -245,14 +245,14 @@
         <!-- Water-themed decorative elements -->
         <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-primary opacity-5 rounded-full -mr-16 -mt-16"></div>
         <div class="absolute bottom-0 left-0 w-1/4 h-1/4 bg-secondary opacity-5 rounded-full -ml-16 -mb-16"></div>
-        
+
         <!-- Water droplet SVG decoration -->
         <div class="absolute top-1/4 right-10 opacity-10">
             <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="text-primary">
                 <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
             </svg>
         </div>
-        
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div class="text-center">
                 <span class="inline-block px-3 py-1 text-sm font-medium text-primary bg-primary bg-opacity-10 rounded-full">
@@ -283,12 +283,12 @@
                             The Lusaka Water Security Initiative (LuWSI) improves water security through collaborative action and sustainable management. Your participation directly contributes to projects that improve water access, quality, and management in communities across Zambia.
                         </p>
                         <div class="mt-4">
-                            <button class="text-primary text-sm font-medium flex items-center" id="read-more-mission">
+                            <a href="{{config('marathon.home')}}" target="_blank" class="text-primary text-sm font-medium flex items-center" id="read-more-mission">
                                 Read more
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
-                            </button>
+                            </a>
                         </div>
                     </div>
 
@@ -305,12 +305,12 @@
                             We focus on long-term, sustainable solutions to water challenges, including infrastructure development, conservation efforts, and education programs. We work with local and international partners to leverage expertise, resources, and best practices in water security management.
                         </p>
                         <div class="mt-4">
-                            <button class="text-primary text-sm font-medium flex items-center" id="read-more-solutions">
+                            <a href="{{config('marathon.home')}}" target="_blank" class="text-primary text-sm font-medium flex items-center" id="read-more-solutions">
                                 Read more
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -328,7 +328,7 @@
                 </svg>
             </div>
         </div>
-        
+
         <div class="relative max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
             <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl p-8 md:p-12 shadow-2xl">
                 <div class="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
@@ -340,7 +340,7 @@
                         <p class="mt-4 text-lg text-white text-opacity-80 max-w-md">
                             Join hundreds of runners supporting water security initiatives in Zambia. Every step you take helps create a sustainable future.
                         </p>
-                        
+
                         <div class="mt-8 flex flex-col sm:flex-row gap-4">
                             <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full text-primary bg-white shadow-lg hover:bg-gray-50 transform transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -356,7 +356,7 @@
                             </a>
                         </div>
                     </div>
-                    
+
                     <div class="mt-10 lg:mt-0 flex justify-center">
                         <!-- Decorative image or icon -->
                         <div class="relative w-72 h-72 rounded-full bg-white bg-opacity-20 flex items-center justify-center">

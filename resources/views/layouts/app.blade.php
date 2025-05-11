@@ -75,7 +75,7 @@
                         <div class="flex-shrink-0 flex items-center">
                             <!-- Logo -->
                             <a href="{{ route('home') }}" class="text-primary font-bold text-xl group">
-                                <img src="{{ asset('img/logo.png') }}" alt="{{ config('marathon.name') }} Logo" class="h-10 w-auto transition-transform duration-300 group-hover:scale-105">
+                                <img src="{{ asset('img/logo-full.png') }}" alt="{{ config('marathon.name') }} Logo" class="h-20 w-auto transition-transform duration-300 group-hover:scale-105">
                             </a>
                         </div>
                     </div>
@@ -93,8 +93,11 @@
                             <a href="{{ route('home') }}#about" class="nav-link {{ request()->is('*#about') ? 'active' : '' }}">
                                 <span>About</span>
                             </a>
-                            <a href="{{ route('home') }}#contact" class="nav-link {{ request()->is('*#contact') ? 'active' : '' }}">
+                            <a href="#contact" class="nav-link {{ request()->is('*#contact') ? 'active' : '' }}">
                                 <span>Contact</span>
+                            </a>
+                            <a href="{{config('marathon.home')}}" target="_blank"  class="nav-link">
+                                <span>{{config('marathon.organizer')}}</span>
                             </a>
                         </nav>
                     <!-- Mobile menu button -->
@@ -116,7 +119,8 @@
                     <a href="{{ route('home') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Home</a>
                     <a href="{{ route('register') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Register</a>
                     <a href="{{ route('home') }}#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">About</a>
-                    <a href="{{ route('home') }}#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Contact</a>
+                    <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Contact</a>
+                    <a href="{{config('marathon.home')}}" target="_blank"  class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">{{config('marathon.organizer')}}</a>
                 </div>
             </div>
         </div>
@@ -137,8 +141,9 @@
                     <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-6 md:mb-0">
                         <a href="{{ route('home') }}" class="text-gray-300 hover:text-white transition-colors">Home</a>
                         <a href="{{ route('register') }}" class="text-gray-300 hover:text-white transition-colors">Register</a>
-                        <a href="#about" class="text-gray-300 hover:text-white transition-colors">About</a>
+                        <a href="{{ route('home') }}#about" class="text-gray-300 hover:text-white transition-colors">About</a>
                         <a href="#contact" class="text-gray-300 hover:text-white transition-colors">Contact</a>
+                        <a href="{{config('marathon.home')}}" target="_blank"  class="text-gray-300 hover:text-white transition-colors">{{config('marathon.organizer')}}</a>
                     </div>
 
                     <div class="flex space-x-4">
@@ -170,7 +175,7 @@
                 </div>
 
                 <div class="mt-6 pt-6 border-t border-gray-700 text-center text-gray-400">
-                    <p>&copy; {{ date('Y') }} {{ config('marathon.name') }}. All rights reserved.</p>
+                    <p>&copy; {{ date('Y') }} All rights reserved. Powered By <a href="https://techpay.co.zm" style="color: orangered">TechPay Limited</a> </p>
                 </div>
             </div>
         </footer>
@@ -189,12 +194,12 @@
                 transition: all 0.3s ease;
                 margin: 0 0.25rem;
             }
-            
+
             .nav-link:hover {
                 color: #33A9E0; /* primary */
                 background-color: rgba(51, 169, 224, 0.05);
             }
-            
+
             .nav-link::after {
                 content: '';
                 position: absolute;
@@ -207,35 +212,35 @@
                 transform: translateX(-50%);
                 opacity: 0;
             }
-            
+
             .nav-link:hover::after {
                 width: 30%;
                 opacity: 0.7;
             }
-            
+
             .nav-link.active {
                 color: #33A9E0; /* primary */
                 font-weight: 600;
             }
-            
+
             .nav-link.active::after {
                 width: 60%;
                 opacity: 1;
             }
         </style>
-    
+
         <!-- Mobile menu toggle script -->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const mobileMenuButton = document.querySelector('.mobile-menu-button');
                 const mobileMenu = document.querySelector('.mobile-menu');
-    
+
                 if (mobileMenuButton && mobileMenu) {
                     mobileMenuButton.addEventListener('click', function() {
                         mobileMenu.classList.toggle('hidden');
                     });
                 }
-                
+
                 // Add active class to nav links based on URL hash
                 function setActiveNavLink() {
                     const hash = window.location.hash;
@@ -249,37 +254,37 @@
                         });
                     }
                 }
-                
+
                 // Set active nav link on page load and hash change
                 setActiveNavLink();
                 window.addEventListener('hashchange', setActiveNavLink);
-            
+
             // Countdown Timer
             function updateCountdown() {
                 const eventDate = new Date('{{ config('marathon.date') }}T{{ substr(config('marathon.time'), 0, 5) }}:00');
                 const now = new Date();
                 const diff = eventDate - now;
-                
+
                 if (diff <= 0) {
                     // Event has passed
                     const daysElement = document.getElementById('countdown-days');
                     const hoursElement = document.getElementById('countdown-hours');
                     const minutesElement = document.getElementById('countdown-minutes');
                     const secondsElement = document.getElementById('countdown-seconds');
-                    
+
                     if (daysElement) daysElement.textContent = '0';
                     if (hoursElement) hoursElement.textContent = '0';
                     if (minutesElement) minutesElement.textContent = '0';
                     if (secondsElement) secondsElement.textContent = '0';
                     return;
                 }
-                
+
                 // Calculate days, hours, minutes, seconds
                 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                
+
                 // Update the DOM if elements exist
                 if (document.getElementById('countdown-days')) {
                     document.getElementById('countdown-days').textContent = days;
@@ -288,18 +293,18 @@
                     document.getElementById('countdown-seconds').textContent = seconds.toString().padStart(2, '0');
                 }
             }
-            
+
             // Initialize countdown
             if (document.getElementById('countdown-days')) {
                 updateCountdown();
                 // Update every second
                 setInterval(updateCountdown, 1000);
             }
-            
+
             // Category tabs functionality
             const categoryTabs = document.querySelectorAll('.category-tab');
             const categoryContents = document.querySelectorAll('.category-content');
-            
+
             categoryTabs.forEach(tab => {
                 tab.addEventListener('click', () => {
                     // Remove active class from all tabs
@@ -307,30 +312,30 @@
                         t.classList.remove('border-primary', 'text-primary');
                         t.classList.add('border-transparent', 'text-gray-500');
                     });
-                    
+
                     // Add active class to clicked tab
                     tab.classList.remove('border-transparent', 'text-gray-500');
                     tab.classList.add('border-primary', 'text-primary');
-                    
+
                     // Hide all content sections
                     categoryContents.forEach(content => {
                         content.classList.add('hidden');
                     });
-                    
+
                     // Show selected content
                     const categoryId = tab.getAttribute('data-category');
                     document.getElementById('category-' + categoryId)?.classList.remove('hidden');
                 });
             });
-            
+
             // Read more functionality for About section
             const readMoreMission = document.getElementById('read-more-mission');
             const readMoreSolutions = document.getElementById('read-more-solutions');
-            
+
             if (readMoreMission) {
                 readMoreMission.addEventListener('click', function() {
                     const content = this.previousElementSibling;
-                    
+
                     if (content.classList.contains('line-clamp-3')) {
                         content.classList.remove('line-clamp-3');
                         this.innerHTML = 'Read less <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>';
@@ -340,11 +345,11 @@
                     }
                 });
             }
-            
+
             if (readMoreSolutions) {
                 readMoreSolutions.addEventListener('click', function() {
                     const content = this.previousElementSibling;
-                    
+
                     if (content.classList.contains('line-clamp-3')) {
                         content.classList.remove('line-clamp-3');
                         this.innerHTML = 'Read less <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>';
@@ -354,6 +359,83 @@
                     }
                 });
             }
+        });
+    </script>
+    <!-- Contact Modal -->
+    @include('partials.contact-modal')
+
+    <!-- Contact Modal Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all elements with href="#contact"
+            const contactLinks = document.querySelectorAll('a[href="#contact"]');
+            const modal = document.getElementById('contact-modal');
+            const modalBackdrop = document.getElementById('modal-backdrop');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const closeModalX = document.getElementById('close-modal');
+
+            // Function to open modal
+            function openModal() {
+                modal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+                
+                // Add animation classes
+                setTimeout(() => {
+                    modalBackdrop.classList.add('opacity-100');
+                    modal.querySelector('.inline-block').classList.add('sm:scale-100', 'opacity-100', 'translate-y-0');
+                }, 10);
+                
+                return false; // Prevent default anchor behavior
+            }
+
+            // Function to close modal
+            function closeModal() {
+                // First remove the opacity to trigger animation
+                modalBackdrop.classList.remove('opacity-100');
+                const modalContent = modal.querySelector('.inline-block');
+                modalContent.classList.remove('sm:scale-100', 'opacity-100', 'translate-y-0');
+                modalContent.classList.add('sm:scale-95', 'opacity-0', 'translate-y-4');
+                
+                // Wait for animation to complete before hiding
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden');
+                }, 300);
+            }
+
+            // Add click event to all contact links
+            contactLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openModal();
+                });
+            });
+
+            // Close modal when clicking the close button
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeModal);
+            }
+
+            // Close modal when clicking the X button
+            if (closeModalX) {
+                closeModalX.addEventListener('click', closeModal);
+            }
+
+            // Close modal when clicking outside of it
+            if (modalBackdrop) {
+                modalBackdrop.addEventListener('click', function(e) {
+                    if (e.target === modalBackdrop) {
+                        closeModal();
+                    }
+                });
+            }
+
+            // Close modal with ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
         });
     </script>
 </body>

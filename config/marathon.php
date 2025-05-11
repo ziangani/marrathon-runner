@@ -10,16 +10,17 @@ return [
     |
     */
 
-    'name' => env('MARATHON_NAME', 'LuWSI Run'),
+    'organizer' => env('MARATHON_ORGANIZER', 'LuWSI'),
+    'name' => env('MARATHON_NAME', 'LuWSI Run for Water'),
     'tagline' => env('MARATHON_TAGLINE', 'Run for Water, Walk for life: Securing Zambia\'s future'),
     'description' => env('MARATHON_DESCRIPTION', 'Zambia is severely water insecure and extremely vulnerable to the impacts of climate change. Join us for the annual marathon to raise awareness and support initiatives addressing water security challenges in Zambia.'),
-
+    'home' => env('MARATHON_HOME', 'https://www.luwsi.org/'),
     /*
     |--------------------------------------------------------------------------
     | Event Details
     |--------------------------------------------------------------------------
     */
-    'date' => env('MARATHON_DATE', '2025-06-07'),
+    'date' => env('MARATHON_DATE', '2025-06-28'),
     'time' => env('MARATHON_TIME', '05:00 AM - 10:00 AM'),
     'location' => env('MARATHON_LOCATION', 'East Park Mall, Lusaka, Zambia'),
 
@@ -31,7 +32,7 @@ return [
     'contact' => [
         'email' => env('MARATHON_EMAIL', 'luwsisecretariat@gmail.com'),
         'phone' => env('MARATHON_PHONE', '+260 975 007122'),
-        'address' => env('MARATHON_ADDRESS', 'Lusaka, Zambia'),
+        'address' => env('MARATHON_ADDRESS', '164 Mulombwa Close, Fairview, Lusaka, Zambia'),
     ],
 
     /*
@@ -40,7 +41,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'social' => [
-        'facebook' => env('MARATHON_FACEBOOK', 'https://facebook.com/luwsirun'),
+        'facebook' => env('MARATHON_FACEBOOK', 'https://www.facebook.com/p/Lusaka-Water-Security-Initiative-100069392127110/'),
         'twitter' => env('MARATHON_TWITTER', 'https://twitter.com/luwsirun'),
         'instagram' => env('MARATHON_INSTAGRAM', 'https://instagram.com/luwsirun'),
     ],
@@ -79,16 +80,16 @@ return [
     |--------------------------------------------------------------------------
     */
     'packages' => [
-        'test' => [
-            'name' => 'Test',
-            'price' => 1,
-            'description' => 'For students with valid ID',
-        ],
-        'student' => [
-            'name' => 'Student',
-            'price' => 150,
-            'description' => 'For students with valid ID',
-        ],
+//        'test' => [
+//            'name' => 'Test',
+//            'price' => 1,
+//            'description' => 'For students with valid ID',
+//        ],
+//        'student' => [
+//            'name' => 'Student',
+//            'price' => 150,
+//            'description' => 'For students with valid ID',
+//        ],
         'individual' => [
             'name' => 'Individual',
             'price' => 400,
