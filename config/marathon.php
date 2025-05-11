@@ -42,8 +42,8 @@ return [
     */
     'social' => [
         'facebook' => env('MARATHON_FACEBOOK', 'https://www.facebook.com/p/Lusaka-Water-Security-Initiative-100069392127110/'),
-        'twitter' => env('MARATHON_TWITTER', 'https://twitter.com/luwsirun'),
-        'instagram' => env('MARATHON_INSTAGRAM', 'https://instagram.com/luwsirun'),
+//        'twitter' => env('MARATHON_TWITTER', 'https://twitter.com/luwsirun'),
+//        'instagram' => env('MARATHON_INSTAGRAM', 'https://instagram.com/luwsirun'),
     ],
 
     /*
