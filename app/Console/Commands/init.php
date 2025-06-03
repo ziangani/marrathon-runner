@@ -42,7 +42,7 @@ class init extends Command
         if (!\App\Models\User::where('email', 'luwsisecretariat@gmail.com')->exists()) {
             $user = new \App\Models\User();
             $user->name = 'Lusaka Water Security Initiative';
-            $user->email = 'luwsisecretariat@gmail.com ';
+            $user->email = 'luwsisecretariat@gmail.com';
             $user->password = bcrypt('Password123$'); // Use a secure password
             $user->save();
             $this->info('User created: ' . $user->email);
