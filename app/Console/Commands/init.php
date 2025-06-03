@@ -36,14 +36,18 @@ class init extends Command
             $paymentProvider->api_secret = 'pk_live_uK4cZIH5ApCXF8RMDSkWCOlf';
             $paymentProvider->api_key = 'b0YFVdPDJktlWmq6JRbLGA2D8lrdxsfm';
             $paymentProvider->save();
+        }
 
-//            $paymentProvider = new PaymentProviders();
-//            $paymentProvider->name = 'TechPay - Prod';
-//            $paymentProvider->merchant_code = 'TECHPAY_PROD';
-//            $paymentProvider->api_url = 'https://pay.techpay.co.zm/techpay/public';
-//            $paymentProvider->api_key = 'e601a9ff2d087fc571b0162826c1396c5877de3a6d6b971da435f8eeadf53d38';
-//            $paymentProvider->api_secret = 'c274315534d13564bf604c23498935b4';
-//            $paymentProvider->save();
+        $this->info('Initializing users...');
+        if (!\App\Models\User::where('email', 'charles@techpay.co.zm')->exists()) {
+            $user = new \App\Models\User();
+            $user->name = 'Charles Mtonga';
+            $user->email = 'charles@techpay.co.zm';
+            $user->password = bcrypt('password'); // Use a secure password
+            $user->save();
+            $this->info('User created: ' . $user->email);
+        } else {
+            $this->info('User already exists');
         }
     }
 }
