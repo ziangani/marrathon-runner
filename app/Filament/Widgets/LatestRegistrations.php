@@ -46,9 +46,7 @@ class LatestRegistrations extends BaseWidget
                     ->sortable(),
             ])
             ->actions([
-                Tables\Actions\Action::make('view')
-                    ->url(fn (Runner $record): string => route('filament.admin.resources.runners.view', ['record' => $record]))
-                    ->icon('heroicon-m-eye'),
+
             ]);
     }
 }

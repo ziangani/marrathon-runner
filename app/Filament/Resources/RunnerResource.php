@@ -56,7 +56,7 @@ class RunnerResource extends Resource
                             ->required(),
                     ])
                     ->columns(2),
-                
+
                 Forms\Components\Section::make('Emergency Contact')
                     ->schema([
                         Forms\Components\TextInput::make('emergency_contact_name')
@@ -68,7 +68,7 @@ class RunnerResource extends Resource
                             ->maxLength(20),
                     ])
                     ->columns(2),
-                
+
                 Forms\Components\Section::make('Race Details')
                     ->schema([
                         Forms\Components\Select::make('t_shirt_size')
@@ -111,7 +111,7 @@ class RunnerResource extends Resource
                             ->visible(fn (Forms\Get $get) => $get('health_condition') === 'Yes'),
                     ])
                     ->columns(2),
-                
+
                 Forms\Components\Section::make('Additional Information')
                     ->schema([
                         Forms\Components\Select::make('how_did_you_hear_about_us')
@@ -133,7 +133,7 @@ class RunnerResource extends Resource
                             ->required(),
                     ])
                     ->columns(2),
-                
+
                 Forms\Components\Section::make('Payment Information')
                     ->schema([
                         Forms\Components\Select::make('package')
@@ -169,7 +169,7 @@ class RunnerResource extends Resource
                         Forms\Components\DateTimePicker::make('payment_date'),
                     ])
                     ->columns(2),
-                
+
                 Forms\Components\Section::make('Notification Status')
                     ->schema([
                         Forms\Components\Toggle::make('email_sent')
@@ -246,20 +246,20 @@ class RunnerResource extends Resource
                         }
                         return $options;
                     }),
-                Tables\Filters\TrashedFilter::make(),
+//                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+//                Tables\Actions\ViewAction::make(),
+//                Tables\Actions\EditAction::make(),
+//                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
-                ]),
-            ]);
+//                Tables\Actions\BulkActionGroup::make([
+//                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\ForceDeleteBulkAction::make(),
+//                    Tables\Actions\RestoreBulkAction::make(),
+//                ]),
+            ])->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
@@ -273,9 +273,9 @@ class RunnerResource extends Resource
     {
         return [
             'index' => Pages\ListRunners::route('/'),
-            'create' => Pages\CreateRunner::route('/create'),
+//            'create' => Pages\CreateRunner::route('/create'),
             'view' => Pages\ViewRunner::route('/{record}'),
-            'edit' => Pages\EditRunner::route('/{record}/edit'),
+//            'edit' => Pages\EditRunner::route('/{record}/edit'),
         ];
     }
 
