@@ -20,7 +20,7 @@ return [
     | Event Details
     |--------------------------------------------------------------------------
     */
-    'date' => env('MARATHON_DATE', '2025-06-28'),
+    'date' => env('MARATHON_DATE', '2025-07-12'),
     'time' => env('MARATHON_TIME', '05:00 AM - 10:00 AM'),
     'location' => env('MARATHON_LOCATION', 'East Park Mall, Lusaka, Zambia'),
 
@@ -80,11 +80,11 @@ return [
     |--------------------------------------------------------------------------
     */
     'packages' => [
-//        'test' => [
-//            'name' => 'Test',
-//            'price' => 1,
-//            'description' => 'For students with valid ID',
-//        ],
+        'test' => [
+            'name' => 'Test',
+            'price' => 1,
+            'description' => 'For students with valid ID',
+        ],
 //        'student' => [
 //            'name' => 'Student',
 //            'price' => 150,
