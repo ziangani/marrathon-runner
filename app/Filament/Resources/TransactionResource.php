@@ -80,8 +80,7 @@ class TransactionResource extends Resource
                     ->color(fn (string $state): string => match ($state) {
                         'COMPLETE' => 'success',
                         'PENDING' => 'warning',
-                        'FAILED' => 'danger',
-                        'CANCELLED' => 'danger',
+                        'FAILED', 'CANCELLED' => 'danger',
                         default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('provider')
@@ -116,12 +115,12 @@ class TransactionResource extends Resource
                     ]),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+//                Tables\Actions\ViewAction::make(),
+//                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -139,7 +138,7 @@ class TransactionResource extends Resource
             'index' => Pages\ListTransactions::route('/'),
             'create' => Pages\CreateTransaction::route('/create'),
             'view' => Pages\ViewTransaction::route('/{record}'),
-            'edit' => Pages\EditTransaction::route('/{record}/edit'),
+//            'edit' => Pages\EditTransaction::route('/{record}/edit'),
         ];
     }
 
