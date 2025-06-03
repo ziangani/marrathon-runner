@@ -39,7 +39,7 @@ class init extends Command
         }
 
         $this->info('Initializing users...');
-        if (!\App\Models\User::where('email', 'luwsisecretariat@gmail.com ')->exists()) {
+        if (!\App\Models\User::where('email', 'luwsisecretariat@gmail.com')->exists()) {
             $user = new \App\Models\User();
             $user->name = 'Lusaka Water Security Initiative';
             $user->email = 'luwsisecretariat@gmail.com ';
