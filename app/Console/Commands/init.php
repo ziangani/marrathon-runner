@@ -39,11 +39,11 @@ class init extends Command
         }
 
         $this->info('Initializing users...');
-        if (!\App\Models\User::where('email', 'charles@techpay.co.zm')->exists()) {
+        if (!\App\Models\User::where('email', 'luwsisecretariat@gmail.com ')->exists()) {
             $user = new \App\Models\User();
-            $user->name = 'Charles Mtonga';
-            $user->email = 'charles@techpay.co.zm';
-            $user->password = bcrypt('password'); // Use a secure password
+            $user->name = 'Lusaka Water Security Initiative';
+            $user->email = 'luwsisecretariat@gmail.com ';
+            $user->password = bcrypt('Password123$'); // Use a secure password
             $user->save();
             $this->info('User created: ' . $user->email);
         } else {
