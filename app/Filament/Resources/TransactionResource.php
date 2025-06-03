@@ -78,7 +78,7 @@ class TransactionResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'PAID' => 'success',
+                        'COMPLETE' => 'success',
                         'PENDING' => 'warning',
                         'FAILED' => 'danger',
                         'CANCELLED' => 'danger',
