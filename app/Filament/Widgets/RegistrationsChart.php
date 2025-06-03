@@ -9,6 +9,8 @@ use Illuminate\Support\Carbon;
 class RegistrationsChart extends ChartWidget
 {
     protected static ?string $heading = 'Registrations';
+    protected static ?int $sort =2;
+    protected int | string | array $columnSpan = 'full';
 
     protected function getData(): array
     {
@@ -42,25 +44,25 @@ class RegistrationsChart extends ChartWidget
     {
         $days = 14; // Last 14 days
         $startDate = Carbon::now()->subDays($days - 1)->startOfDay();
-        
+
         $registrations = [];
         $paidRegistrations = [];
         $labels = [];
-        
+
         for ($i = 0; $i < $days; $i++) {
             $date = $startDate->copy()->addDays($i);
             $nextDate = $date->copy()->addDay();
-            
+
             $count = Runner::whereBetween('created_at', [$date, $nextDate])->count();
             $paidCount = Runner::whereBetween('created_at', [$date, $nextDate])
                 ->where('status', 'PAID')
                 ->count();
-            
+
             $registrations[] = $count;
             $paidRegistrations[] = $paidCount;
             $labels[] = $date->format('M d');
         }
-        
+
         return [
             'registrations' => $registrations,
             'paid' => $paidRegistrations,
