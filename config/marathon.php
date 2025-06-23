@@ -20,7 +20,7 @@ return [
     | Event Details
     |--------------------------------------------------------------------------
     */
-    'date' => env('MARATHON_DATE', '2025-07-12'),
+    'date' => env('MARATHON_DATE', '2025-07-19'),
     'time' => env('MARATHON_TIME', '05:00 AM - 10:00 AM'),
     'location' => env('MARATHON_LOCATION', 'East Park Mall, Lusaka, Zambia'),
 
