@@ -25,13 +25,7 @@ class SendPendingPaymentReminder extends Command
             $this->info(count($runners) . ' pending payment runners found.');
 
             foreach ($runners as $runner) {
-                $message = "Dear Participant,\n"
-                    . "Please be reminded that your payment for the LuWSI Run this Sat 19 July 2025 is still pending.\n"
-                    . "Please pay by Thurs, 17 July to secure your spot & race pack:\n"
-                    . "Follow link below to complete payment\n"
-                    . "https://luwsi.techpay.co.zm/\n\n"
-                    . "Warm regards,\n"
-                    . "LuWSI Team";
+                $message = "Dear Participant, Please be reminded that your payment for the LuWSI Run this Sat 19 July 2025 is still pending. Please pay by Thurs, 17 July to secure your spot & race pack: Follow link below to complete payment https://luwsi.techpay.co.zm/ Warm regards, LuWSI Team";
 
                 $sms = new SmsNotifications();
                 $sms->message = $message;
