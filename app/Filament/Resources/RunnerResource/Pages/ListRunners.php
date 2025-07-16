@@ -19,7 +19,7 @@ class ListRunners extends ListRecords
         return [
             Actions\CreateAction::make(),
             Actions\Action::make('exportCsv')
-                ->label('Export Runners CSV')
+                ->label('Download Report')
                 ->color('success')
                 ->icon('heroicon-o-arrow-down-tray')
                 ->form([
@@ -127,23 +127,6 @@ class ListRunners extends ListRecords
             // Add BOM for proper UTF-8 encoding in Excel
             fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
             
-            // Add filter information as comments at the top
-            fputcsv($file, ['# Export Filters Applied:']);
-            fputcsv($file, ['# Status: ' . $filters['status']]);
-            if (!empty($filters['package'])) {
-                $packageName = config("marathon.packages.{$filters['package']}.name") ?? $filters['package'];
-                fputcsv($file, ['# Package: ' . $packageName]);
-            }
-            if (!empty($filters['date_from'])) {
-                fputcsv($file, ['# Date From: ' . $filters['date_from']]);
-            }
-            if (!empty($filters['date_to'])) {
-                fputcsv($file, ['# Date To: ' . $filters['date_to']]);
-            }
-            fputcsv($file, ['# Export Date: ' . date('Y-m-d H:i:s')]);
-            fputcsv($file, ['# Total Records: ' . $runners->count()]);
-            fputcsv($file, []); // Empty row
-            
             // CSV Headers
             fputcsv($file, [
                 'ID',
@@ -164,16 +147,6 @@ class ListRunners extends ListRecords
                 'Health Condition Details',
                 'How Did You Hear About Us',
                 'Exhibiting',
-                'Reference Number',
-                'Transaction ID',
-                'Payment Provider',
-                'Payment Reference',
-                'Payment Date',
-                'Email Sent',
-                'SMS Sent',
-                'WhatsApp Sent',
-                'Registration Date',
-                'Last Updated',
             ]);
 
             // CSV Data
@@ -197,16 +170,6 @@ class ListRunners extends ListRecords
                     $runner->health_condition_specify ?? '',
                     $runner->how_did_you_hear_about_us ?? '',
                     $runner->exhibiting ? ucfirst($runner->exhibiting) : '',
-                    $runner->reference ?? '',
-                    $runner->transaction_id ?? '',
-                    $runner->payment_provider ?? '',
-                    $runner->payment_reference ?? '',
-                    $runner->payment_date ? $runner->payment_date->format('Y-m-d H:i:s') : '',
-                    $runner->email_sent ? 'Yes' : 'No',
-                    $runner->sms_sent ? 'Yes' : 'No',
-                    $runner->whatsapp_sent ? 'Yes' : 'No',
-                    $runner->created_at ? $runner->created_at->format('Y-m-d H:i:s') : '',
-                    $runner->updated_at ? $runner->updated_at->format('Y-m-d H:i:s') : '',
                 ]);
             }
 
