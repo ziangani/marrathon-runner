@@ -40,16 +40,13 @@ class SendRacePackDateChangeNotification extends Command
                     continue;
                 }
 
-                $message = "Dear Participant,\n"
-                    . "IMPORTANT UPDATE: The LuWSI Run for Water Security 2025 race pack collection date has been CHANGED.\n"
-                    . "NEW DATE: Friday, 18th July 2025 (previously Thursday, 17th July 2025)\n"
-                    . "Time remains the same: 08:00hrs - 17:00hrs\n"
-                    . "Venue remains the same:\n"
-                    . "NWASCO House\n"
-                    . "No. 164 Mulombwa Close\n"
-                    . "Fairview, Lusaka\n"
-                    . "We sincerely apologize for any inconvenience this change may have caused.\n"
-                    . "Thank you for your understanding.\n"
+                $message = 
+                    "IMPORTANT: LuWSI Run race pack collection date has CHANGED.\n"
+                    . "NEW DATE: Friday, 18th July 2025 (was Thursday, 17th July)\n"
+                    . "Time & Venue remain the same:\n"
+                    . "08:00hrs - 17:00hrs at NWASCO House\n"
+                    . "164 Mulombwa Close, Fairview, Lusaka\n"
+                    . "We sincerely apologize for any inconvenience.\n"
                     . "Warm regards,\n"
                     . "LuWSI Team";
 
