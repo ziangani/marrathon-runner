@@ -50,7 +50,7 @@ class SendRacePackDateChangeNotification extends Command
                 $sms->message = $message;
                 $sms->mobile = $runner->phone;
                 $sms->status = 'PENDING';
-                $sms->sender = config('marathon.sms.sender_id', 'LuWSI');
+                $sms->sender = config('marathon.sms.sender_id', 'TechPay');
                 $sms->save();
 
                 $this->info("Date change notification queued for: {$runner->name} ({$runner->phone})");
