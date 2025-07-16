@@ -5,7 +5,9 @@ namespace App\Filament\Resources\RunnerResource\Pages;
 use App\Filament\Resources\RunnerResource;
 use App\Models\Runner;
 use Filament\Actions;
+use Filament\Forms;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Notifications\Notification;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ListRunners extends ListRecords
@@ -20,20 +22,96 @@ class ListRunners extends ListRecords
                 ->label('Export Runners CSV')
                 ->color('success')
                 ->icon('heroicon-o-arrow-down-tray')
-                ->action(function () {
-                    return $this->exportToCsv();
-                }),
+                ->form([
+                    Forms\Components\Select::make('status')
+                        ->label('Payment Status')
+                        ->options([
+                            'PENDING' => 'Pending',
+                            'PAID' => 'Paid',
+                            'CANCELLED' => 'Cancelled',
+                            'FAILED' => 'Failed',
+                        ])
+                        ->required()
+                        ->placeholder('Select payment status')
+                        ->helperText('Select the payment status to filter runners'),
+                    
+                    Forms\Components\Select::make('package')
+                        ->label('Package (Optional)')
+                        ->options($this->getPackageOptions())
+                        ->placeholder('All packages')
+                        ->helperText('Leave empty to include all packages'),
+                    
+                    Forms\Components\DatePicker::make('date_from')
+                        ->label('Registration Date From (Optional)')
+                        ->placeholder('Select start date')
+                        ->helperText('Filter runners registered from this date'),
+                    
+                    Forms\Components\DatePicker::make('date_to')
+                        ->label('Registration Date To (Optional)')
+                        ->placeholder('Select end date')
+                        ->helperText('Filter runners registered up to this date'),
+                ])
+                ->action(function (array $data) {
+                    return $this->exportToCsv($data);
+                })
+                ->modalHeading('Export Runners CSV')
+                ->modalDescription('Select filters to export specific runners data')
+                ->modalSubmitActionLabel('Export CSV')
+                ->modalWidth('md'),
         ];
     }
 
     /**
-     * Export runners to CSV
+     * Get package options for the filter
      */
-    protected function exportToCsv(): StreamedResponse
+    protected function getPackageOptions(): array
     {
-        $runners = Runner::orderBy('created_at', 'desc')->get();
+        $packages = config('marathon.packages', []);
+        $options = [];
         
-        $filename = 'runners-export-' . date('Y-m-d-H-i-s') . '.csv';
+        foreach ($packages as $key => $package) {
+            $options[$key] = $package['name'] ?? ucfirst(str_replace('_', ' ', $key));
+        }
+        
+        return $options;
+    }
+
+    /**
+     * Export runners to CSV with filters
+     */
+    protected function exportToCsv(array $filters): StreamedResponse
+    {
+        // Build query with filters
+        $query = Runner::query();
+        
+        // Status filter (mandatory)
+        $query->where('status', $filters['status']);
+        
+        // Package filter (optional)
+        if (!empty($filters['package'])) {
+            $query->where('package', $filters['package']);
+        }
+        
+        // Date range filters (optional)
+        if (!empty($filters['date_from'])) {
+            $query->whereDate('created_at', '>=', $filters['date_from']);
+        }
+        
+        if (!empty($filters['date_to'])) {
+            $query->whereDate('created_at', '<=', $filters['date_to']);
+        }
+        
+        $runners = $query->orderBy('created_at', 'desc')->get();
+        
+        // Show notification about the export
+        Notification::make()
+            ->title('CSV Export Started')
+            ->body("Exporting {$runners->count()} runners with status: {$filters['status']}")
+            ->success()
+            ->send();
+        
+        // Generate filename with filters
+        $filename = $this->generateFilename($filters);
         
         $headers = [
             'Content-Type' => 'text/csv; charset=UTF-8',
@@ -43,11 +121,28 @@ class ListRunners extends ListRecords
             'Expires' => '0',
         ];
 
-        $callback = function() use ($runners) {
+        $callback = function() use ($runners, $filters) {
             $file = fopen('php://output', 'w');
             
             // Add BOM for proper UTF-8 encoding in Excel
             fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            
+            // Add filter information as comments at the top
+            fputcsv($file, ['# Export Filters Applied:']);
+            fputcsv($file, ['# Status: ' . $filters['status']]);
+            if (!empty($filters['package'])) {
+                $packageName = config("marathon.packages.{$filters['package']}.name") ?? $filters['package'];
+                fputcsv($file, ['# Package: ' . $packageName]);
+            }
+            if (!empty($filters['date_from'])) {
+                fputcsv($file, ['# Date From: ' . $filters['date_from']]);
+            }
+            if (!empty($filters['date_to'])) {
+                fputcsv($file, ['# Date To: ' . $filters['date_to']]);
+            }
+            fputcsv($file, ['# Export Date: ' . date('Y-m-d H:i:s')]);
+            fputcsv($file, ['# Total Records: ' . $runners->count()]);
+            fputcsv($file, []); // Empty row
             
             // CSV Headers
             fputcsv($file, [
@@ -119,5 +214,38 @@ class ListRunners extends ListRecords
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * Generate filename based on filters
+     */
+    protected function generateFilename(array $filters): string
+    {
+        $parts = ['runners', 'export'];
+        
+        // Add status to filename
+        $parts[] = strtolower($filters['status']);
+        
+        // Add package to filename if specified
+        if (!empty($filters['package'])) {
+            $parts[] = strtolower(str_replace('_', '-', $filters['package']));
+        }
+        
+        // Add date range if specified
+        if (!empty($filters['date_from']) || !empty($filters['date_to'])) {
+            $dateRange = [];
+            if (!empty($filters['date_from'])) {
+                $dateRange[] = 'from-' . $filters['date_from'];
+            }
+            if (!empty($filters['date_to'])) {
+                $dateRange[] = 'to-' . $filters['date_to'];
+            }
+            $parts[] = implode('-', $dateRange);
+        }
+        
+        // Add timestamp
+        $parts[] = date('Y-m-d-H-i-s');
+        
+        return implode('-', $parts) . '.csv';
     }
 }
