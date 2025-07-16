@@ -35,12 +35,6 @@ class ListRunners extends ListRecords
                         ->placeholder('Select payment status')
                         ->helperText('Select the payment status to filter runners'),
                     
-                    Forms\Components\Select::make('package')
-                        ->label('Package (Optional)')
-                        ->options($this->getPackageOptions())
-                        ->placeholder('All packages')
-                        ->helperText('Leave empty to include all packages'),
-                    
                     Forms\Components\DatePicker::make('date_from')
                         ->label('Registration Date From (Optional)')
                         ->placeholder('Select start date')
@@ -66,11 +60,11 @@ class ListRunners extends ListRecords
      */
     protected function getPackageOptions(): array
     {
-        $packages = config('marathon.packages', []);
+        $packages = Runner::distinct()->pluck('package')->filter();
         $options = [];
         
-        foreach ($packages as $key => $package) {
-            $options[$key] = $package['name'] ?? ucfirst(str_replace('_', ' ', $key));
+        foreach ($packages as $package) {
+            $options[$package] = ucfirst(str_replace('_', ' ', $package));
         }
         
         return $options;
@@ -159,7 +153,7 @@ class ListRunners extends ListRecords
                     $runner->gender ?? '',
                     $runner->race_category ?? '',
                     $runner->race_number ?? '',
-                    $runner->package ? (config("marathon.packages.{$runner->package}.name") ?? $runner->package) : '',
+                    $runner->package ? ucfirst(str_replace('_', ' ', $runner->package)) : '',
                     $runner->package_amount ? number_format($runner->package_amount, 2) : '',
                     $runner->status ?? '',
                     $runner->emergency_contact_name ?? '',
