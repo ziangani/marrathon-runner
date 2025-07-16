@@ -34,7 +34,7 @@ class SendPaymentReminderSMS extends Command
                     continue;
                 }
 
-                $smsText = "Dear Participant, Please be reminded that your payment for the LuWSI Run this Sat 19 July 2025 is still pending. Please pay by Thurs, 17 July to secure your spot & race pack: Follow link below to complete payment https://luwsi.techpay.co.zm/ Warm regards, LuWSI Team";
+                $smsText = "Dear Participant, Payment for LuWSI Run (Sat 19 July 2025) is pending. Pay by Thurs 17 July to secure your spot & race pack. Complete payment: https://luwsi.techpay.co.zm/ - LuWSI Team";
 
                 // Create SMS notification record
                 $sms = new SmsNotifications();
