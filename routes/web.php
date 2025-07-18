@@ -6,8 +6,13 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ConfirmationController;
 
-// Landing page
-Route::get('/', [LandingController::class, 'index'])->name('home');
+// Registration closed page
+Route::get('/', function() {
+    return view('registration-closed');
+})->name('home');
+
+// Registration landing page
+Route::get('/registration', [LandingController::class, 'index'])->name('registration');
 
 // Registration routes
 Route::get('/register', [RegistrationController::class, 'showForm'])->name('register');
