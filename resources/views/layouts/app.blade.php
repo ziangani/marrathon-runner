@@ -87,9 +87,9 @@
                             <a href="{{ route('home') }}" class="nav-link {{ $currentRoute == 'home' ? 'active' : '' }}">
                                 <span>Home</span>
                             </a>
-                            <a href="{{ route('register') }}" class="nav-link {{ $currentRoute == 'register' ? 'active' : '' }}">
+                            <!-- <a href="{{ route('register') }}" class="nav-link {{ $currentRoute == 'register' ? 'active' : '' }}">
                                 <span>Register</span>
-                            </a>
+                            </a> -->
                             <a href="{{ route('home') }}#about" class="nav-link {{ request()->is('*#about') ? 'active' : '' }}">
                                 <span>About</span>
                             </a>
